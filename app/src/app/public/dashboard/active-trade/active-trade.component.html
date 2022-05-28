@@ -1,0 +1,70 @@
+<aside *ngIf="!isChartRoomOpen" class="col-12 chart-list">
+  <header>
+    <h1
+      *ngIf="open_trades_messages.length == 0"
+      style="font-size: 20px; color: #000000"
+    >
+      No Open orders
+    </h1>
+  </header>
+  <header>
+    <h1
+      *ngIf="open_trades_messages.length > 0"
+      style="font-size: 20px; color: #000000"
+    >
+      Open orders 
+    </h1>
+  </header>
+
+  <ul>
+    <li *ngFor="let item of open_trades_messages; let i = index;" [ngClass]="{'active': currentLi === i}" >
+      <!-- <img
+        src="assets/sample-profile.png"
+        alt=""
+        width="30px"
+        height="40px"
+        style="padding-top: 10px"
+      /> -->
+      <div (click)="openChart(item, i)" class="text-left pdglft-15 pointer">
+        <div (click)="openChart(item, i)" class="capital-text order-header">
+          <div>
+            <span style="font-size: 15px"> {{ item.sellerNickname }}  </span>
+          </div>
+          <div>
+            <span class="status orange"></span> {{item.createTime | date:'dd MMM yyyy, HH:mm'}}
+          </div>
+        </div>
+        <div class="order-header">
+          <div>
+            <span class="status orange"></span> INR: {{ item.totalPrice | number : '1.2-2' }}
+          </div>
+          <div>
+            <span class="status orange"></span>{{ item.asset }}: {{ item.amount | number : '1.2-2' }}
+          </div>          
+        </div>
+      </div>
+    </li>
+    <li class="comp_list">
+      <div class="form-group shadow-textarea">
+        <label>Trade start message</label>
+        <textarea
+          class="form-control z-depth-1"
+          [(ngModel)]="feedback.start_message"
+        ></textarea>
+        <label>Trade end message</label>
+        <textarea
+          class="form-control z-depth-1"
+          [(ngModel)]="feedback.end_message"
+        ></textarea>
+
+        <button
+          
+          (click)="send_feedback()"
+          class="mt_10 btn btn-outline-success btn_pay"
+        >
+          Update
+        </button>
+      </div>
+    </li>
+  </ul>
+</aside>

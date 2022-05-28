@@ -1,0 +1,49 @@
+/*! CSS Used from: Embedded */
+ul>li{color:#fff;}
+aside{background-color:#3b3e49;display:inline-block;font-size:15px;vertical-align:top;margin-top:20px;}
+aside header{padding:30px 20px;}
+aside ul{padding-left:0;margin:0;list-style-type:none;overflow-y:scroll;}
+aside li{padding:10px 0;border:2px solid #7e7676;margin:3px;}
+aside li:hover{background-color:#5e616a;}
+h2,h3{margin:0;}
+aside li img{border-radius:50%;margin-left:20px;margin-right:8px;}
+aside li div{display:inline-block;vertical-align:top;margin-top:12px;}
+aside li h2{font-size:14px;color:#fff;font-weight:normal;margin-bottom:5px;}
+aside li h3{font-size:12px;color:#7e818a;font-weight:normal;}
+.status{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:7px;}
+.orange{background-color:#ff725d;}
+/*! CSS Used from: Embedded */
+main{height: 100%;display: flex;font-size: 15px;vertical-align: top;background-color: azure;flex-direction: column;justify-content: space-between;}
+h2,h3{margin:0;}
+.status{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:7px;}
+.green{background-color:#58b666;}
+.blue{background-color:#6fbced;margin-right:0;margin-left:7px;}
+main header{height:110px;padding:30px 20px 30px 40px;}
+main header>*{display:inline-block;vertical-align:top;}
+main header img:first-child{border-radius:50%;}
+main header div{margin-left:10px;margin-right:145px;}
+main header h2{font-size:16px;margin-bottom:5px;}
+main header h3{font-size:14px;font-weight:normal;color:#7e818a;}
+#chat{padding-left:0;margin:0;list-style-type:none;overflow-y:scroll;border-top:2px solid #fff;border-bottom:2px solid #fff;}
+#chat li{padding:10px 30px;}
+#chat h2,#chat h3{display:inline-block;font-size:13px;font-weight:normal;color: #212121;margin-right: 20px;}
+#chat h3{color:#212121;}
+#chat .entete{margin-bottom:5px;}
+#chat .message{padding:20px;color:#fff;line-height:25px;display:inline-block;text-align:left;border-radius:5px;position: relative;}
+#chat .me{text-align:right;}
+#chat .you .message{background-color:#58b666;}
+#chat .me .message{background-color:#2673a3;}
+#chat .triangle{width:0;height:0;border-style:solid;border-width:0 10px 10px 10px;}
+#chat .you .triangle{border-color:transparent transparent #58b666 transparent;margin-left:15px;position: absolute;top: -10px;}
+#chat .me .triangle{border-color:transparent transparent #2673a3 transparent;position: absolute;top: -10px;}
+main footer{height:155px;padding:20px 0px 10px 20px;}
+main footer textarea{resize:none;border:none;display:block;height:91px;border-radius:3px;padding:20px;font-size:13px;width:80%;margin-bottom:13px;}
+main footer textarea::placeholder{color:rgb(2, 2, 0);}
+main footer img{height:25px;cursor:pointer;}
+div>li{padding-left:10px;}
+.msg_send{width: 64px;height: 60px!important;margin:12px 10px;}
+.close_btn{position:absolute;padding:5px;top:7px;right:20px;font-size:26px;font-weight:900;color:red;}
+/*! CSS Used from: Embedded */
+aside{height:100%;background-color:#3b3e49;display:inline-block;font-size:15px;vertical-align:top;margin-top:20px;}
+main{background-color: #b0b2d2;}
+.bank-details p{margin-bottom:5px}

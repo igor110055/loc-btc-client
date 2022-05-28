@@ -1,0 +1,100 @@
+<div class="col-xs-12 col-sm-12 col-md-12">
+  <aside class="column-order">
+    <div class="user-details">
+      <ul>
+        <form
+          class="form-signin"
+          [formGroup]="inputForm"
+          class="mb_35"
+          (ngSubmit)="initiatePayouts()"
+        >
+          <li>
+            <label style="color: white"
+              >#{{orderNo}} --- {{ sellerName }}</label
+            >
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="bene_account_number"
+                placeholder="Enter account number"
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="ifsc_code"
+                placeholder="Enter IFSC Code"
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="recepient_name"
+                placeholder="Enter Account Holder Name"
+              />
+            </div>
+
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="amount"
+                placeholder="Enter Amount"
+              />
+            </div>
+
+            <div class="form-group">
+              <select
+                formControlName="transaction_types_id"
+                class="browser-default custom-select"
+              >
+                <option value="">Select Payment Option</option>
+                <option value="4">IMPS</option>
+                <option value="2">NEFT</option>
+                <option value="3">RTGS</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="otp"
+                placeholder="Enter OTP"
+              />
+            </div>
+
+            <!-- <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="purpose"
+                placeholder="Add transaction Notes"
+              />
+            </div> -->
+          </li>
+          
+        
+        <div style="padding: 20px">
+          <button
+            class="mt_10 btn btn-outline-primary btn_pay"
+            (click)="getOTP()"
+          >
+            Requst for OTP
+          </button>
+          <button
+            *ngIf="!showInvoice || currentChartUser?.contact_id"
+            class="mt_10 btn btn-outline-success btn_pay"
+            (click)="convetToPDF()"
+          >
+            Download Invoice
+          </button>
+          <button [attr.disabled]="btnStatus" type="submit" class="mt_10 btn btn-outline-success btn_pay">Pay Now</button>
+        </div>
+      </form>
+      </ul>
+    </div>
+  </aside>
+</div>

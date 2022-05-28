@@ -1,0 +1,28 @@
+    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                <button *ngFor="let item of add_list; let i = index;" type="button" class="btn ads btn-outline-{{item['visible'] ? 'primary': 'danger'}}" 
+                [ngClass]="{'active': currentBtn === i, 
+                'usdtbg': item['asset'] === 'USDT',
+                'btcbg': item['asset'] === 'BTC',
+                'busdbg': item['asset'] === 'BUSD',
+                'bnbbg': item['asset'] === 'BNB',
+                'ethbg': item['asset'] === 'ETH',
+                'adabg': item['asset'] === 'ADA',
+                'trxbg': item['asset'] === 'TRX',
+                'shibbg': item['asset'] === 'SHIB',
+                'maticbg': item['asset'] === 'MATIC',
+                'wrxbg': item['asset'] === 'WRX',
+                'xrpbg': item['asset'] === 'XRP',
+                'solbg': item['asset'] === 'SOL'
+            }" (click)="onSelect(item, i)" title="{{item['advNo'] }}"> {{ item['asset']}}</button>
+            <!-- <ngb-pagination [(page)]="page"  [pageSize]="pageSize"  [collectionSize]="collectionSize" (pageChange)="getAdsData($event)"></ngb-pagination> -->
+                <div *ngIf="showdetails" class="details">
+                    <li style="padding-left: 10px;"> Margin Limit : <a   class="f_6 _price text">{{val }}%</a></li>
+                    <li style="padding-left: 10px;"> Wazirx Buy Price :
+                      <a class="f_6 _price text-{{priceUpdate ? 'success' : 'primary'}}">{{wazirxBidPrice}}</a></li>
+                    <li style="padding-left: 10px;"> Wazirx Upper Price :
+                        <a class="f_6 _price text-{{priceUpdate ? 'success' : 'primary'}}">{{wazirxUPPrice}}</a></li>
+
+                    <li style="padding-left: 10px;"> Our Ads Price : <a class="f_6 _price text-{{priceUpdate ? 'success' : 'primary'}}">{{adsPrice}} </a></li>
+
+                </div>
+    </div>

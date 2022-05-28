@@ -1,0 +1,33 @@
+<section class="login_f">
+    <div class="box">
+        <div class="square" style="--i:0;"></div>
+        <div class="square" style="--i:1;"></div>
+        <div class="square" style="--i:2;"></div>
+        <div class="square" style="--i:3;"></div>
+        <div class="square" style="--i:4;"></div>
+        <div class="square" style="--i:5;"></div>
+        <div class="container">
+            <div class="form">
+                <h2>AlchemistPro</h2>
+                <form [formGroup]="inputForm" class="mb_35" (ngSubmit)="onSubmit()" autocomplete="on">
+                    <div class="inputBx">
+                        <input type="text" required="required" name="email" id="email" formControlName="email">
+                        <span>Login</span>
+                        <i class="fa fa-user-circle"></i>
+                    </div>
+                    <div class="inputBx password">
+                        <input id="password-input" [type]="passwordType" name="password" id="password" formControlName="password" required="required">
+                        <span>Password</span>
+                        <a class="password-control" (click)="passwordType =='password' ? passwordType = 'text' : passwordType = 'password'"></a>
+                        <i class="fa fa-key"></i>
+                    </div>
+                    <div class="inputBx">
+                        <input type="submit" value="Log in">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</section>

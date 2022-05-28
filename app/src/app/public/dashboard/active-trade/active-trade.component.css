@@ -1,0 +1,19 @@
+ul {list-style: none;padding: 3px;background-color: #5877ea;}
+li{display: flex;flex-direction: row;background-color: #223168;}
+.status{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:7px;}
+.orange{background-color:#ff725d;}
+h2,h3{font-size: 16px; line-height: 1;color: #ffffff}
+.pdglft-15 {padding-left: 15px}
+/*! CSS Used from: Embedded */
+ul>li{color:#fff;}
+aside li{padding:10px;border:2px solid #101126;margin:3px;}
+aside li:hover, li.active{background-color:#c31e1e;}
+aside li.comp_list:hover{background-color:#223168;}
+aside li div{display:inline-block;vertical-align:top;margin-top:3px;}
+.form-group{width:100%;}
+.shadow-textarea textarea.form-control::placeholder{font-weight:300;}
+.shadow-textarea textarea.form-control{padding-left:0.8rem;}
+aside div div.order-header{display: flex; justify-content: space-between;}
+aside div{width: 100%;}
+.btn_pay {width: 100%;}
+

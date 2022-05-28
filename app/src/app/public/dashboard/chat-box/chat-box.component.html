@@ -1,0 +1,86 @@
+<main  class="col-12" *ngIf="showChatBox">
+  <header>
+    <!-- <img src="assets/sample-profile.png" alt="" width="20px" /> -->
+    <div>
+      <h2>{{ currentChartUser?.seller.username }}</h2>
+      <h3>{{ currentChartUser?.seller.last_online | date: "medium" }}</h3>
+    </div>
+    <!-- <img
+      src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png"
+      alt=""
+    /> -->
+  </header>
+  <ul id="chat">
+      <li class="you">
+        <div class="entete receiver">
+          <span class="status green"></span>
+          <h2 class="capital-text">{{chatLists.sellerNickname}}</h2>
+          <h3>{{chatLists.remark}}</h3>
+        </div>
+       
+        <div class="message">
+          <div class="triangle"></div>
+          <p>{{chatLists.price}}</p>
+          <div *ngIf="chatLists.payType === 'IMPS' || chatLists.payType === 'NEFT' || chatLists.payType === 'RTGS'" class="bank-details">
+            <p>Account No: {{accountNo[0].fieldValue}}</p>
+            <p>IFSC Code: {{ifsc[0].fieldValue}}</p>
+            <p>Account Holder Name: {{name[0].fieldValue}}</p>
+          </div> 
+          <i *ngIf="chatLists.payType === 'IMPS' || chatLists.payType === 'NEFT' || chatLists.payType === 'RTGS'" class="fa fa-copy pointer" (click)="copyChat(chatLists.payMethods)"></i>
+        </div>
+      </li>
+      <li class="me sender">
+        <div class="entete">
+          <h2>You</h2>
+          <span class="status blue"></span>
+        </div>
+        
+
+        <div class="message">
+          <div class="triangle"></div>
+          <p>Will look into it</p>
+        </div>
+      </li>
+    <div #scrollMe *ngFor="let msg of currentChartRoom">
+      <li class="you" *ngIf="msg.username == currentChartUser.seller.username">
+        <div class="entete receiver">
+          <span class="status green"></span>
+          <h2>{{ msg.username }}</h2>
+          <h3>{{ msg.created_at | date: "medium" }}</h3>
+        </div>
+        
+        <div class="message">
+          <div class="triangle"></div>
+
+          {{ msg.msg }}
+          <i class="fa fa-copy" (click)="copyChat(msg.msg)"></i>
+        </div>
+      </li>
+      <li
+        *ngIf="msg.username == currentChartUser.buyer.username"
+        class="me sender"
+      >
+        <div class="entete">
+          <h2>Me</h2>
+          <h3>{{ msg.created_at | date: "medium" }}</h3>
+          <span class="status blue"></span>
+        </div>
+        
+
+        <div class="message">
+          <div class="triangle"></div>
+          {{ msg.msg }}
+        </div>
+      </li>
+    </div>
+  </ul>
+  <footer class="row">
+    <textarea placeholder="Type your message"></textarea>
+    <img
+      src="assets/msg_sent.png"
+      alt=""
+      (click)="sendMessage(input_text)"
+      class="msg_send btn"
+    />
+  </footer>
+</main>

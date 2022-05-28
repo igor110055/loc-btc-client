@@ -1,0 +1,24 @@
+<div class="dashboard-container container-fluid">
+    <div class="navbar row">
+        <div class="navbar-list col-xs-12 col-sm-12 col-md-12 text-center">
+            <app-navbar></app-navbar>
+        </div>
+    </div>
+    <div class="ads-list row">
+        <div class="ads-list col-xs-12 col-sm-12 col-md-12 text-center">
+            <app-ads-list (postAdsDetails)="handleDataAdsListDetails($event)" [fetchUpdatedMarginData]="updatedMarginData"></app-ads-list>
+        </div>
+    </div>
+    <div class="sub-section row">  
+        <div class="active-trades col-xs-4 col-sm-4 col-md-4 text-center">
+            <app-active-trade (postChatStatus)="handleDataChatStatus($event)" ></app-active-trade>
+        </div>
+        <div class="chat-box  col-xs-4 col-sm-4 col-md-4">
+            <app-chat-box (postBankDetails)="handleDataBankDetails($event)" [fetchPostStatus]="chatStatusData"></app-chat-box>
+        </div>
+        <div class="bank-competitors-section col-xs-4 col-sm-4 col-md-4">
+            <app-competitors-list [fetchMarginData]="adsDetailsData" (postMarginBack)="handleDataCompListUpdatedMargin($event)"></app-competitors-list>
+            <app-bank-info [fetchBankData]="bankDetailsData" [fetchChatStatusData]="chatStatusData"></app-bank-info>
+        </div>
+    </div>
+</div>

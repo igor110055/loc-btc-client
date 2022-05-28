@@ -1,0 +1,76 @@
+/*! CSS Used from: Embedded */
+aside {
+  height: 100%;
+  background-color: #5877ea;
+  display: inline-block;
+  font-size: 15px;
+  vertical-align: top;
+  margin-top: 20px;
+}
+aside input {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 50px 0 20px;
+  background-color: #24429b;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  background-repeat: no-repeat;
+  background-position: 170px;
+  background-size: 40px;
+}
+aside input::placeholder {
+  color: #fff;
+}
+aside ul {
+  padding-left: 0;
+  margin: 0;
+  list-style-type: none;
+  overflow-y: scroll;
+}
+aside li {
+  padding: 10px 0;
+  border: 2px solid #7e7676;
+  margin: 3px;
+}
+aside li:hover {
+  background-color: #5e616a;
+}
+aside li div {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 12px;
+}
+.user-details > ul {
+  margin: 5px;
+  background-color: #223168;
+}
+.user-details > ul > form > li {
+  padding: 5px;
+}
+.user-details > ul > form > li {
+  padding: 5px;
+  background-color: transparent;
+}
+input[type="text"] {
+  margin: -8px 1px;
+  height: 40px !important;
+}
+.btn_pay {
+  width: 100%;
+}
+.form-group {
+  width: 100%;
+}
+.comp_list > input {
+  margin: 10px;
+}
+.column-order {
+  display: flex;
+  flex-direction: column;
+}
+.id_list {
+  color: #ffffff;
+}
+

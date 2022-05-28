@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body, app-root, app-login {
+    height: 100%;
+    font-family: Roboto;
+}
+.mt_10 {
+    margin-top: 10px;
+}
+.mt_30 {
+    margin-top: 30px;
+}
+dl, ol, ul {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url(assets/fonts/Roboto-Regular.ttf);
+}
+
+.capital-text {
+    text-transform: capitalize;
+}
+.pointer {
+    cursor: pointer;
+}
