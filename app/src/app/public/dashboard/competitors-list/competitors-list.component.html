@@ -43,15 +43,14 @@
       </li>
       <li
         style="padding: 0px 10px"
-        *ngFor="let obj of comp_list"
+        *ngFor="let comp_id of comp_list"
         class="comp_ids"
       >
         <span class="id_list"
-          >Adv No: {{ obj.advNo }} 
-          <a class="price">Ads Price: {{ obj.price}}</a>
+          >
           <a
             class="text-danger close_b btn"
-            (click)="onRemoveCompById(obj.comp_id, selectedAds.ad_id)"
+            (click)="onRemoveCompById(comp_id)"
             >X</a
           ></span
         >

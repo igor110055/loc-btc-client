@@ -31,7 +31,7 @@ export class DashboardService {
   }
 
   addCompetitorByID(id:number ){
-    return this.generalService.postService(`/api/binance/addAdvId`, {"adsNo":id}, "binance")
+    return this.generalService.postService(`/api/competitor/addCompetitor`, {"competitorId":id}, "btc")
   }
 
   initiatePayouts(data:any ){
@@ -52,8 +52,8 @@ export class DashboardService {
     return this.generalService.getService(`/chat/contact_message/${id}`, "binance", 'spin')
   }
 
-  onRemoveCompById(comp_id:any, ad_id:any){
-    return this.generalService.getService(`/binance/delete_comp?comp_id=${comp_id}&ad_id=${ad_id} `, "binance")
+  onRemoveCompById(comp_id:any){
+    return this.generalService.deleteService(`/api/competitor/removeCompetitor/` + comp_id)
   }
 
   sendOTP(){
@@ -61,7 +61,7 @@ export class DashboardService {
   }
 
   sendLimit(data:any){
-    return this.generalService.putService(`/api/setting/updateMarginByCurrency/` + data.asset + 'INR',{"margin": data.margin},"binance")
+    return this.generalService.putService(`/api/setting/updateMarginByCurrency/BTCINR` ,{"margin": data.margin},"binance")
   }
   SaveStartFeed(feedback:any)
   {
@@ -84,8 +84,8 @@ export class DashboardService {
     return this.generalService.getService('/binance/getFeedback',"binance")
   }
 
-  getMargin(currency: string) {
-    return this.generalService.getService('/api/setting/getMarginByCurrency/' + currency + 'INR', 'binance')
+  getMargin() {
+    return this.generalService.getService('/api/setting/getMargin', 'btc')
   }
 
   getAdDetailsByNo(advNo: string) {

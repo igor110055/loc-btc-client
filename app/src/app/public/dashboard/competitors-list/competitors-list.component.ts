@@ -35,7 +35,7 @@ export class CompetitorsListComponent implements OnInit {
   }
 
   onSubmit() {
-    this._service.sendLimit({"margin":this.setLimitForm.value.upLimit, "asset": this.asset}).subscribe((res: any) => {
+    this._service.sendLimit({"margin":this.setLimitForm.value.upLimit}).subscribe((res: any) => {
       if (res && res.message == "Success") {
         this._notify.success("Success", "Margin Updated Successfully");
         this.getMarginValue();
@@ -45,9 +45,9 @@ export class CompetitorsListComponent implements OnInit {
   }
 
   getMarginValue() {
-    this._service.getMargin(this.asset).subscribe((res: any) => {
+    this._service.getMargin().subscribe((res: any) => {
       if (!!res) {
-        this.postMarginBack.emit(res.data.margin);
+        this.postMarginBack.emit(res.data.BTCINR.margin);
         this._notify.success("Success", "Margin Updated");
       } else {
         this._notify.error('Error', res.message);
@@ -66,9 +66,9 @@ export class CompetitorsListComponent implements OnInit {
      })
   };
 
-  onRemoveCompById(comp_id: any, ad_id: any) {
-    this._service.onRemoveCompById(comp_id, ad_id).subscribe((res) => {
-      if (!!res && res.status) {
+  onRemoveCompById(comp_id: any) {
+    this._service.onRemoveCompById(comp_id).subscribe((res) => {
+      if (!!res && res.message == "Success") {
         this._notify.success('Success', res.message);
         this.getCompListById(this.selectedAds.ad_id);
       } else
@@ -97,8 +97,7 @@ export class CompetitorsListComponent implements OnInit {
         if (!!res && res.message == "Success") {
           this._notify.success('Success', res.message);
           if (res.data) {
-            var addedComp = Object.values(res.data)
-            this.comp_list.push(addedComp[0])
+            this.comp_list = Object.values(res.data);
           }
         } else {
             this._notify.error('Error', res.message);

@@ -218,7 +218,7 @@ export class BankInfoComponent implements OnInit, OnChanges {
   }
 
   onRemoveCompById(comp_id: any, ad_id: any) {
-    this._service.onRemoveCompById(comp_id, ad_id).subscribe((res) => {
+    this._service.onRemoveCompById(comp_id).subscribe((res) => {
       if (!!res && res.status) {
         this._notify.success('Success', res.message);
         this.getCompListById(this.selectedAds.ad_id);

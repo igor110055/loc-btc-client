@@ -26,7 +26,7 @@ export class GeneralService {
 
   getService(apiUrl: string, server_name?:string, spin?:any): Observable<any> {
     this.url = this.wazirx_URL + apiUrl;
-    if(server_name == 'binance')
+    if(server_name == 'btc')
       this.url = this.Binanace_URL + apiUrl;
     if(!!!spin)
     this._spin.show()
@@ -38,7 +38,7 @@ export class GeneralService {
 
   postService(apiUrl: string, data: any, server_name?:string): Observable<any> {
     this.url = this.wazirx_URL + apiUrl;
-    if(server_name == 'binance')
+    if(server_name == 'btc')
     this.url = this.Binanace_URL + apiUrl;
     this._spin.show()
     return this.http.post(this.url, data, httpOptions)
@@ -68,7 +68,7 @@ export class GeneralService {
 
   putService(apiUrl: string, data: any, server_name?:string): Observable<any> {
     this.url = this.wazirx_URL + apiUrl;
-    if(server_name == 'binance')
+    if(server_name == 'btc')
     this.url = this.Binanace_URL + apiUrl;
     return this.http.put(this.url, data, httpOptions).pipe(
       catchError(this.handleError)

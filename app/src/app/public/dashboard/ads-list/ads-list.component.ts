@@ -68,9 +68,9 @@ export class AdsListComponent implements OnInit, OnDestroy {
     this.showdetails = true;    
     this.priceUpdate = true;  
     this.val = 1;
-    this._service.getMargin(obj.asset).subscribe((res: any) => {
-      this.val = res.data.margin || 0;
-      this.postAdsDetails.emit({"margin":res.data.margin, "asset": obj.asset, "advNo": obj.advNo});
+    this._service.getMargin().subscribe((res: any) => {
+      this.val = res.data.BTCINR.margin;
+      this.postAdsDetails.emit({"margin":res.data.BTCINR.margin, "asset": res.data.BTCINR.currency});
     }, (error: any) => {
       this._notify.error('Error', error); 
     })
