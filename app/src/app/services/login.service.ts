@@ -7,7 +7,7 @@ import { GeneralService } from "./general.service";
 export class LoginService {
     constructor(private generalService : GeneralService) { }
     getLoginData(data: any){
-        return this.generalService.postService("/api/user/login", data, "binance")
+        return this.generalService.postService("/api/user/login", data, "btc")
     }
 
 }

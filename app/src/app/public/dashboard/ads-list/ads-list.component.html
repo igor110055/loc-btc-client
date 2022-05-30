@@ -1,6 +1,6 @@
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                 <button *ngFor="let item of add_list; let i = index;" type="button" class="btn ads btn-outline-{{item['visible'] ? 'primary': 'danger'}}" 
-                [ngClass]="{'active': currentBtn === i}" (click)="onSelect(item, i)" title="{{item['advNo'] }}"> {{ item['asset']}}</button>
+                [ngClass]="{'active': currentBtn === i}" (click)="onSelect(item, i)" title="{{item.data['ad_id'] }}"> BTCINR</button>
             <!-- <ngb-pagination [(page)]="page"  [pageSize]="pageSize"  [collectionSize]="collectionSize" (pageChange)="getAdsData($event)"></ngb-pagination> -->
                 <div *ngIf="showdetails" class="details">
                     <li style="padding-left: 10px;"> Margin Limit : <a   class="f_6 _price text">{{val }}%</a></li>

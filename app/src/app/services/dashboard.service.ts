@@ -8,8 +8,8 @@ export class DashboardService {
 
   constructor(private generalService : GeneralService) { }
 
-  getAdsData(data: any){
-    return this.generalService.postService("/api/binance/getAdsDetailsListWithPagination", data, "binance")
+  getAdsData(){
+    return this.generalService.getService("/api/localbitcoin/getAds",  "btc")
   }
   // getWazirxData(){
   //   return this.generalService.getService('/binance/wazirxData',"binance")
@@ -53,7 +53,7 @@ export class DashboardService {
   }
 
   onRemoveCompById(comp_id:any){
-    return this.generalService.deleteService(`/api/competitor/removeCompetitor/` + comp_id)
+    return this.generalService.deleteService(`/api/competitor/removeCompetitor/` + comp_id, "btc")
   }
 
   sendOTP(){
@@ -61,7 +61,7 @@ export class DashboardService {
   }
 
   sendLimit(data:any){
-    return this.generalService.putService(`/api/setting/updateMarginByCurrency/BTCINR` ,{"margin": data.margin},"binance")
+    return this.generalService.putService(`/api/setting/updateMarginByCurrency/BTCINR` ,{"margin": data.margin},"btc")
   }
   SaveStartFeed(feedback:any)
   {
@@ -95,10 +95,15 @@ export class DashboardService {
     return this.generalService.getService('/sapi/v1/tickers/24hr');
   }
   getStartEndMessages() {
-    return this.generalService.getService('/api/trade_messages/getTradeMessages', 'binance')
+    return this.generalService.getService('/api/trade_messages/getTradeMessages', 'btc')
   }
 
   getChatDetails(url: string) {
     return this.generalService.getService('/api/binance/getChatMessagesWithPagination?' + url, 'binance')
+  }
+
+  getCompetitor() {
+    return this.generalService.getService('/api/competitor/getCompetitor', 'btc')
+    
   }
 }

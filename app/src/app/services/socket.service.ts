@@ -22,6 +22,7 @@ export class SocketService {
   }
 
   setUserOrder() {
+    console.log("in setUserOrder");
     return this.socket.emit("getUserOrder", { page: 1, rows: 100 })
   }
   

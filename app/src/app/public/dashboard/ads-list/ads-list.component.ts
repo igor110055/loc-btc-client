@@ -36,7 +36,7 @@ export class AdsListComponent implements OnInit, OnDestroy {
   public asset: string = "";
   private adsDetailsSub: Subscription = new Subscription();
   private wzssDetailsSub: Subscription = new Subscription();
-  public wzsData: any[] = [];
+  public wzsData: any = {};
   public currentBtn: number = 0;
 
   
@@ -52,9 +52,15 @@ export class AdsListComponent implements OnInit, OnDestroy {
 
   getAdsData(page: number) {
     const postData = {"page": page, "rows": this.pageSize}
-    this._service.getAdsData(postData).subscribe((res: any) => {
-      if (!!res && res.data.success && res.data.data.length > 0) {
-        this.add_list = res.data.data;
+    this._service.getAdsData().subscribe((res: any) => {
+      console.log(res);
+      if (!!res && res.message == "OK") {
+        console.log(res);
+        this.add_list = res.data.ad_list.filter((data: any) => {
+          console.log(data.data.trade_type);
+          return data.data.trade_type == "ONLINE_SELL" && data.data.online_provider == "BANK_TRANSFER_IMPS";
+        });
+        console.log(this.add_list)
         this.collectionSize = res.data.total;
         this.onSelect(this.add_list[0], 0);
       }
@@ -82,10 +88,10 @@ export class AdsListComponent implements OnInit, OnDestroy {
     this.asset = obj.asset;
     //this.selectedAds.msg = this.selectedAds.msg.replace(/\n/g, "<br />");
     this.wzssDetailsSub = this._socketService.getWazirxDetails().subscribe((data: any) => {
-      this.wzsData = data.filter((data: any) => data.coin.includes(this.asset));
-      this.wazirxBidPrice = this.wzsData[0] && this.wzsData[0].wp ? parseFloat(this.wzsData[0].wp) : this.wazirxBidPrice;
-      this.wazirxUPPrice = this.wzsData[0] && this.wzsData[0].wup ? parseFloat(this.wzsData[0].wup) : this.wazirxUPPrice
-      this.val = this.wzsData[0] && this.wzsData[0].uplimit ? parseFloat(this.wzsData[0].uplimit) * 100 : this.val;
+      this.wzsData = data;
+      this.wazirxBidPrice = this.wzsData && this.wzsData.wp ? parseFloat(this.wzsData.wp) : this.wazirxBidPrice;
+      this.wazirxUPPrice = this.wzsData && this.wzsData.wup ? parseFloat(this.wzsData.wup) : this.wazirxUPPrice
+      this.val = this.wzsData && this.wzsData.uplimit ? parseFloat(this.wzsData.uplimit) * 100 : this.val;
     },(error) => {
       this._notify.error("Error", error);
     })

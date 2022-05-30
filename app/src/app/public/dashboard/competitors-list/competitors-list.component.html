@@ -46,8 +46,8 @@
         *ngFor="let comp_id of comp_list"
         class="comp_ids"
       >
-        <span class="id_list"
-          >
+        <span class="id_list">
+          {{comp_id}}
           <a
             class="text-danger close_b btn"
             (click)="onRemoveCompById(comp_id)"

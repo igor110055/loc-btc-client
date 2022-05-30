@@ -59,8 +59,10 @@ export class GeneralService {
       );
   }
 
-  deleteService(apiUrl: string): Observable<any> {
+  deleteService(apiUrl: string, server_name?:string): Observable<any> {
     this.url = this.wazirx_URL + apiUrl;
+    if(server_name == 'btc')
+    this.url = this.Binanace_URL + apiUrl;
     return this.http.delete(this.url, httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError));;

@@ -21,6 +21,7 @@ export class CompetitorsListComponent implements OnInit {
   constructor(private _service: DashboardService, private _notify: ToastrsService, private formBuilder: FormBuilder){ }
 
   ngOnInit(): void {
+  this.getCompList();   
  }
   setLimitForm = new FormGroup({
     upLimit: new FormControl(''),
@@ -70,17 +71,20 @@ export class CompetitorsListComponent implements OnInit {
     this._service.onRemoveCompById(comp_id).subscribe((res) => {
       if (!!res && res.message == "Success") {
         this._notify.success('Success', res.message);
-        this.getCompListById(this.selectedAds.ad_id);
+        this.getCompList();
       } else
         this._notify.error('Error', res.message);
     })
   }
 
-  getCompListById(id: any) {
-    this._service.getDetailsById(id).subscribe((res) => {
-      if (!!res && res.status) {
-        if (res.comp_ids.length > 0) {
-          this.comp_list = res.comp_ids;
+  getCompList() {
+    this._service.getCompetitor().subscribe((res) => {
+      console.log(res);
+      if (!!res && res.message == "Success") {
+        console.log(res)
+        if (res.data.length > 0) {
+          console.log(res.data)
+          this.comp_list = res.data;
         } else {
           this._notify.error('Error', res.message);
           this.comp_list = [];
@@ -91,7 +95,7 @@ export class CompetitorsListComponent implements OnInit {
 
   onAddComp(id: any) {
     // if (!!id && id.length == 7 && this.selectedAds.ad_id) {
-    id = BigInt(id);
+    //id = BigInt(id);
     id = id.toString();
       this._service.addCompetitorByID(id).subscribe((res) => {
         if (!!res && res.message == "Success") {
