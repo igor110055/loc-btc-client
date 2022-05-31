@@ -96,8 +96,11 @@ export class CompetitorsListComponent implements OnInit {
   getCompDetails(id: any) {
     this._service.getCompDetails(id).subscribe((res: any) => {
       console.log(res)
-      if (res && res.message == "Success") {
-        this.comp_list.push({"id": id })
+      if (res && res.message == "OK") {
+        console.log(res)
+        let adsPrice = res.data.ad_list[0].data.temp_price
+        this.comp_list.push({"id": id, "adsprice": adsPrice })
+        console.log(this.comp_list)
         this._notify.success("Success", "Margin Updated Successfully");
       } else
         this._notify.error('error', 'Not Updated');
