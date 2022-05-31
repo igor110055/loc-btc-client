@@ -18,22 +18,14 @@ export class AdsListComponent implements OnInit, OnDestroy {
   }
   
 
-  public add_list : any[] = [];
-  public selectedAds: any = '';
+  public add_list : any = {};
   public comp_list: any = [];
   public showdetails: boolean = false;
   public priceUpdate: boolean = false;
-  public val: number = 12;
-  public wazirxBidPrice: number = 12;
-  public wazirxUPPrice: number = 12;
-  public pageSize: number = 100;
-  public page: number = 1;
-  public collectionSize: number = 0;
   public adsPrice: number = 0;
-  public returnedPrice: number = 0;
-  public returnedWazirxPrice: number = 0;
-  public advNo: string = "";
-  public asset: string = "";
+  public val: number = 0;
+  public wazirxBidPrice: number = 0;
+  public wazirxUPPrice: number = 0;
   private adsDetailsSub: Subscription = new Subscription();
   private wzssDetailsSub: Subscription = new Subscription();
   public wzsData: any = {};
@@ -47,21 +39,16 @@ export class AdsListComponent implements OnInit, OnDestroy {
     private elem: ElementRef) { }
   
   ngOnInit(): void {
-    this.getAdsData(this.page);
+    this.getAdsData();
   }
 
-  getAdsData(page: number) {
-    const postData = {"page": page, "rows": this.pageSize}
+  getAdsData() {
     this._service.getAdsData().subscribe((res: any) => {
       console.log(res);
       if (!!res && res.message == "OK") {
         console.log(res);
-        this.add_list = res.data.ad_list.filter((data: any) => {
-          console.log(data.data.trade_type);
-          return data.data.trade_type == "ONLINE_SELL" && data.data.online_provider == "BANK_TRANSFER_IMPS";
-        });
+        this.add_list = res.data.ad_list[0].data;
         console.log(this.add_list)
-        this.collectionSize = res.data.total;
         this.onSelect(this.add_list[0], 0);
       }
     },(error: any) => {
@@ -82,11 +69,6 @@ export class AdsListComponent implements OnInit, OnDestroy {
     })
     this.wazirxBidPrice = 0;
     this.wazirxUPPrice = 0; 
-    this.selectedAds = obj;
-    this.selectedAds.price_equation = 78.4;
-    this.advNo = obj.advNo;
-    this.asset = obj.asset;
-    //this.selectedAds.msg = this.selectedAds.msg.replace(/\n/g, "<br />");
     this.wzssDetailsSub = this._socketService.getWazirxDetails().subscribe((data: any) => {
       this.wzsData = data;
       this.wazirxBidPrice = this.wzsData && this.wzsData.wp ? parseFloat(this.wzsData.wp) : this.wazirxBidPrice;
@@ -131,28 +113,7 @@ export class AdsListComponent implements OnInit, OnDestroy {
     });
   }
 
-  getAdsPrice(advNo: any) {
-    this._service.getAdDetailsByNo(advNo).subscribe((res: any) => {
-      if (!!res && res.data.success) {
-        this.returnedPrice = parseFloat(res.data.data.price);
-      }
-    },(error: any) => {
-      this._notify.error("Error", error)
-    });
-    return this.returnedPrice;
-    //return Math.random();
-  }
-  // getWazirxPrice(asset: any): string {
-  //   this._service.getWazirxPrice().subscribe((res: any) => {
-  //     if (!!res && res.data.success) {
-  //       this.returnedWazirxPrice = res.data.data.price;
-  //     }
-  //   },(error: any) => {
-  //     this._notify.error("Error", error)
-  //   });
-  //   //return this.returnedPrice;
-  //   return Math.random();
-  // }
+  
 
   ngOnDestroy(): void {
     this.adsDetailsSub.unsubscribe();

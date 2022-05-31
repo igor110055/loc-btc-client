@@ -23,11 +23,12 @@ export class SocketService {
 
   setUserOrder() {
     console.log("in setUserOrder");
-    return this.socket.emit("getUserOrder", { page: 1, rows: 100 })
+    return this.socket.emit("getTrades")
   }
   
   getUserOrderDetails() {
-    return this.socket.fromEvent("getUserOrderDetails").pipe(map((data) =>  data));
+    console.log("in get trade details")
+    return this.socket.fromEvent("getTradeDetails").pipe(map((data) => {console.log("in trade"); console.log(data);data;}));
   }
   setMerchantAd() {
     return this.socket.emit("getMerchantAd",  {merchantNo: "s1b112d51539a3712bc212bce8089512c" })

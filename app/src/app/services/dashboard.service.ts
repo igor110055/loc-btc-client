@@ -65,12 +65,12 @@ export class DashboardService {
   }
   SaveStartFeed(feedback:any)
   {
-    return this.generalService.putService(`/api/trade_messages/updateTradeMessages/start_message`,{"messages" : feedback.start_message},"binance")
+    return this.generalService.putService(`/api/trade_messages/updateTradeMessages/start_message`,{"messages" : feedback.start_message},"btc")
   }
 
   SaveEndFeed(feedback:any)
   {
-    return this.generalService.putService(`/api/trade_messages/updateTradeMessages/end_message`,{"messages" : feedback.end_message},"binance")
+    return this.generalService.putService(`/api/trade_messages/updateTradeMessages/end_message`,{"messages" : feedback.end_message},"btc")
   }
 
 
@@ -104,6 +104,11 @@ export class DashboardService {
 
   getCompetitor() {
     return this.generalService.getService('/api/competitor/getCompetitor', 'btc')
+    
+  }
+
+  getCompDetails(id:any) {
+    return this.generalService.getService('/api/localbitcoin/getAdsByNo/' + id, 'btc')
     
   }
 }

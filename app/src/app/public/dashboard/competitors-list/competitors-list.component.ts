@@ -79,18 +79,29 @@ export class CompetitorsListComponent implements OnInit {
 
   getCompList() {
     this._service.getCompetitor().subscribe((res) => {
-      console.log(res);
       if (!!res && res.message == "Success") {
-        console.log(res)
         if (res.data.length > 0) {
-          console.log(res.data)
-          this.comp_list = res.data;
+          for(var x = 0; x < res.data.length; x++) {
+            console.log(res.data[x])
+            this.getCompDetails(res.data[x])
+          }
         } else {
           this._notify.error('Error', res.message);
           this.comp_list = [];
         }
       }
     });
+  }
+
+  getCompDetails(id: any) {
+    this._service.getCompDetails(id).subscribe((res: any) => {
+      console.log(res)
+      if (res && res.message == "Success") {
+        this.comp_list.push({"id": id })
+        this._notify.success("Success", "Margin Updated Successfully");
+      } else
+        this._notify.error('error', 'Not Updated');
+    })  
   }
 
   onAddComp(id: any) {
@@ -101,7 +112,11 @@ export class CompetitorsListComponent implements OnInit {
         if (!!res && res.message == "Success") {
           this._notify.success('Success', res.message);
           if (res.data) {
-            this.comp_list = Object.values(res.data);
+            let amendedList = Object.values(res.data);
+            for(var x = 0; x < amendedList.length; x++) {
+              console.log(amendedList[x])
+              this.getCompDetails(amendedList[x])
+            }
           }
         } else {
             this._notify.error('Error', res.message);

@@ -101,6 +101,7 @@ export class ActiveTradeComponent implements OnInit, OnDestroy {
   getStartEndMessages() {
     this._service.getStartEndMessages().subscribe(
       (res: any) => {
+        console.log(res)
         if (res && res.data && res.message == 'Success') {
           this.feedback.start_message = res.data.start_message;
           this.feedback.end_message = res.data.end_message;
