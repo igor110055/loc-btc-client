@@ -48,7 +48,7 @@ export class AdsListComponent implements OnInit, OnDestroy {
       console.log(res);
       if (!!res && res.message == "OK") {
         console.log(res);
-        this.add_list = res;
+        this.add_list = res.data.ad_list[0].data;
         this.adsPrice = this.add_list.temp_price ? this.add_list.temp_price : this.add_list.price_equation;
         this.onSelect(this.add_list[0], 0);
       }
