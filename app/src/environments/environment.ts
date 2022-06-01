@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  socketURL:"http://localhost:7860",
+  socketURL:"http://localhost:4000",
   wazirx_URL:"https://api.wazirx.com",
-  Binanace_URL:"http://localhost:7860",
+  Binanace_URL:"http://localhost:4000",
 };
 
 /*

@@ -40,6 +40,7 @@ export class AdsListComponent implements OnInit, OnDestroy {
   
   ngOnInit(): void {
     this.getAdsData();
+    this.getPriceUpdate()
   }
 
   getAdsData() {
@@ -47,8 +48,7 @@ export class AdsListComponent implements OnInit, OnDestroy {
       console.log(res);
       if (!!res && res.message == "OK") {
         console.log(res);
-        this.add_list = res.data.ad_list[0].data;
-        console.log(this.add_list);
+        this.add_list = res;
         this.adsPrice = this.add_list.temp_price ? this.add_list.temp_price : this.add_list.price_equation;
         this.onSelect(this.add_list[0], 0);
       }
@@ -78,22 +78,22 @@ export class AdsListComponent implements OnInit, OnDestroy {
     },(error) => {
       this._notify.error("Error", error);
     })
-    interval(1000).pipe(
-      map(() => this._socketService.setMerchantAd())
-    ).subscribe();
-    this._socketService.setMerchantAd();
-    this.adsDetailsSub = this._socketService.getMerchantAdDetails().subscribe(
-      (res: any) => {
-        if (res && res.data && res.message == 'success') {
-          console.log(res)
-        }else {
-          this._notify.error('Error', "Something went wrong");
-        }
-      },
-      (error: any) => {
-        this._notify.error('Error', error);
-      }
-    );
+    // interval(1000).pipe(
+    //   map(() => this._socketService.setMerchantAd())
+    // ).subscribe();
+    // this._socketService.setMerchantAd();
+    // this.adsDetailsSub = this._socketService.getMerchantAdDetails().subscribe(
+    //   (res: any) => {
+    //     if (res && res.data && res.message == 'success') {
+    //       console.log(res)
+    //     }else {
+    //       this._notify.error('Error', "Something went wrong");
+    //     }
+    //   },
+    //   (error: any) => {
+    //     this._notify.error('Error', error);
+    //   }
+    // );
 
   }
 
@@ -114,6 +114,14 @@ export class AdsListComponent implements OnInit, OnDestroy {
     });
   }
 
+  getPriceUpdate() {
+    this.adsDetailsSub = this._socketService.getPriceUpdate().subscribe((data: any) => {
+      console.log(data);
+    },(error) => {
+      console.log(error)
+      this._notify.error("Error", error);
+    })
+  }
   
 
   ngOnDestroy(): void {

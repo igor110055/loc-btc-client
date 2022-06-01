@@ -130,7 +130,6 @@ export class BankInfoComponent implements OnInit, OnChanges {
 
   initiatePayouts() {
     var input_value = this.inputForm.value;
-    console.log(input_value);
     input_value.merchant_ref_id = Math.floor(100000 + Math.random() * 900000);
     this._service.initiatePayouts(this.inputForm.value).subscribe((res) => {
       if (!!res && res.status) {

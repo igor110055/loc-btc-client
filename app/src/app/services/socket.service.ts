@@ -21,14 +21,16 @@ export class SocketService {
     return this.socket.fromEvent("WazirxPricesArray").pipe(map((data) => data));
   }
 
+  getPriceUpdate() {
+    return this.socket.fromEvent("PriceUpdate").pipe(map((data) => data));
+  }
+
   setUserOrder() {
-    console.log("in setUserOrder");
     return this.socket.emit("getTrades")
   }
   
   getUserOrderDetails() {
-    console.log("in get trade details")
-    return this.socket.fromEvent("getTradeDetails").pipe(map((data) => {console.log("in trade"); console.log(data);data;}));
+    return this.socket.fromEvent("getTradeDetails").pipe(map((data) => data));
   }
   setMerchantAd() {
     return this.socket.emit("getMerchantAd",  {merchantNo: "s1b112d51539a3712bc212bce8089512c" })

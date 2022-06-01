@@ -82,6 +82,7 @@ export class ActiveTradeComponent implements OnInit, OnDestroy {
     this._socketService.setUserOrder();
     this.userOrderDetailsSub = this._socketService.getUserOrderDetails().subscribe(
       (res: any) => {
+        console.log("getTradeDetails");
         console.log(res);
         if (res && res.data && res.message == 'success') {
           //this.open_trades_messages = res.data.filter((data: any) => data.orderStatus == 1 || data.orderStatus == 2 || data.orderStatus == 3)
@@ -101,7 +102,6 @@ export class ActiveTradeComponent implements OnInit, OnDestroy {
   getStartEndMessages() {
     this._service.getStartEndMessages().subscribe(
       (res: any) => {
-        console.log(res)
         if (res && res.data && res.message == 'Success') {
           this.feedback.start_message = res.data.start_message;
           this.feedback.end_message = res.data.end_message;

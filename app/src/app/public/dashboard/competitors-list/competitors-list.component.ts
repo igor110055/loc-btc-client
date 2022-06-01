@@ -68,7 +68,7 @@ export class CompetitorsListComponent implements OnInit {
   };
 
   onRemoveCompById(comp_id: any) {
-    this._service.onRemoveCompById(comp_id).subscribe((res) => {
+    this._service.onRemoveCompById(comp_id.id).subscribe((res) => {
       if (!!res && res.message == "Success") {
         this._notify.success('Success', res.message);
         this.getCompList();
@@ -82,7 +82,6 @@ export class CompetitorsListComponent implements OnInit {
       if (!!res && res.message == "Success") {
         if (res.data.length > 0) {
           for(var x = 0; x < res.data.length; x++) {
-            console.log(res.data[x])
             this.getCompDetails(res.data[x])
           }
         } else {
@@ -95,15 +94,14 @@ export class CompetitorsListComponent implements OnInit {
 
   getCompDetails(id: any) {
     this._service.getCompDetails(id).subscribe((res: any) => {
-      console.log(res)
       if (res && res.message == "OK") {
-        console.log(res)
         let adsPrice = res.data.ad_list[0].data.temp_price
-        this.comp_list.push({"id": id, "adsprice": adsPrice })
-        console.log(this.comp_list)
-        this._notify.success("Success", "Margin Updated Successfully");
+        if(adsPrice) {
+          this.comp_list.push({"id": id, "adsprice": adsPrice })
+        }
+        this._notify.success("Success", "Competitor Updated Successfully");
       } else
-        this._notify.error('error', 'Not Updated');
+        this._notify.error('error', 'No Competitor');
     })  
   }
 
@@ -117,7 +115,6 @@ export class CompetitorsListComponent implements OnInit {
           if (res.data) {
             let amendedList = Object.values(res.data);
             for(var x = 0; x < amendedList.length; x++) {
-              console.log(amendedList[x])
               this.getCompDetails(amendedList[x])
             }
           }
