@@ -2,7 +2,7 @@
     <div class="poratals-container">
         <div>
             <span>Wazirx Sell Price:</span>
-            <span class="mrgn15">{{wBidPrice.price}}</span>
+            <span class="mrgn15">{{wzPrice.wzSellPrice}}</span>
             <span class="wazirxsp">
                 <div class="btn-group" role="group" aria-label="Radio buttons for switching between wazirx and zebpay">
                     <input type="radio" value="on" name="wazirxsp" class="btn-check" id="wazirxsp1"  [checked]="setwon" (change)="selectedWP($event)"/>
@@ -16,7 +16,7 @@
         </div>
         <div>
             <span>Zebpay Sell Price:</span>
-            <span class="mrgn15">{{wBidPrice.price}}</span>
+            <span class="mrgn15">{{wzPrice.zebSellPrice}}</span>
             <span class="zebpaysp">
                 <div class="btn-group" role="group" aria-label="Radio buttons for switching between wazirx and zebpay">
                     <input type="radio" value="on" name="zebpaysp" class="btn-check" id="zebpaysp1"  [checked]="setzpon" (change)="selectedZP($event)"/>

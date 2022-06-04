@@ -23,7 +23,7 @@ export class DashboardService {
   }
 
   getOrderDetails(advNo: string){
-    return this.generalService.postService("/api/binance/getUserOrderDetail", {"adOrderNo":advNo}, "binance")
+    return this.generalService.postService("/api/localbitcoin/getContactMessages/" + advNo, "btc")
   }
 
   getDetailsById(id:number){
@@ -39,7 +39,7 @@ export class DashboardService {
   }
 
   contactMessageSend(id:any,data:any ){
-    return this.generalService.postService(`/chat/contact_message/${id}`, data, "binance")
+    return this.generalService.postService(`/api/localbitcoin/addContactMessages/` + id , {"msg": data}, "btc")
   }
 
 
@@ -57,7 +57,7 @@ export class DashboardService {
   }
 
   sendOTP(){
-    return this.generalService.getService(`/payment/send_otp`, "binance")
+    return this.generalService.getService(`/api/payment/send_otp`, "btc")
   }
 
   sendLimit(data:any){

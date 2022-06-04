@@ -21,6 +21,9 @@ export class ChatBoxComponent implements OnInit {
   public accountNo: any = {};
   public ifsc: any = {};
   public name: any = {};
+  public welcomeMsg: any = "";
+  public postedMessage: any = "";
+  public orderNo: number = 0;
   @ViewChild('scrollMe') private myScrollContainer: ElementRef<any> | any;
 
   @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef<any> | any;
@@ -28,14 +31,35 @@ export class ChatBoxComponent implements OnInit {
   @Input() set fetchPostStatus(data:any) {
     if(data) {
       this.showChatBox = data.status;
-      this.url = "id=&order=&orderNo=" + data.orderNo + "&page=1&rows=10&sort="
-      //this._service.getChatDetails(this.url).subscribe((res: any) => {
-      this._service.getOrderDetails(data.orderNo).subscribe((res: any) => {
-        if (res && res.data && res.data.message == "success") {
-          this.chatLists = res;
-          this.postBankDetails.emit(false)
-        }
-      },(error) => this._notify.error("Error", "Something went wrong"))
+
+      this.chatLists =
+        {
+          "msg": "Let me know how the offer sounds to you",
+          "sender": {
+              "id": 123,
+              "name": "bitcoinbaron (0)",
+              "username": "bitcoinbaron",
+              "trade_count": 0,
+              "last_online": "2013-12-17T03:31:12.382862+00:00"
+          },
+          "created_at": "2013-12-19T16:03:38.218039",
+          "is_admin": false,
+          "attachment_name": "cnXvo5sV6eH4-some_image.jpg",
+          "attachment_type": "image/jpeg",
+          "attachment_url": "https://localbitcoins.com/api/..."
+      }
+    
+      
+      this.setWelcomeMessage();
+      this.orderNo = data.orderNo;
+      //this.orderNo = data.orderNo;
+      // this._service.getOrderDetails(data.orderNo).subscribe((res: any) => {
+      //   if (res && res.data && res.data.message == "success") {
+      //     this.chatLists = res;
+      //     this.setWelcomeMessage();
+      //     this.postBankDetails.emit(false)
+      //   }
+      // },(error) => this._notify.error("Error", "Something went wrong"))
     }
   }
 
@@ -132,11 +156,35 @@ export class ChatBoxComponent implements OnInit {
   }
 
 
-  sendMessage(message: any) {
+  sendMessage() {
+    var messageToPost = this.postedMessage;
+    console.log(messageToPost);
+    this._service.contactMessageSend(this.orderNo, messageToPost).subscribe((res) => {
+      this._notify.success("Success", "Message posted successfully")
+    }, (error) => {
+      this._notify.error("Error", "Message coudn't be posted plese try again")
+    })
   }
 
   getMessage()
   {
+  }
+
+  setWelcomeMessage() {
+    this._service.getStartEndMessages().subscribe(
+      (res: any) => {
+        if (res && res.data && res.message == 'Success') {
+          this.welcomeMsg = res.data.start_message;
+          this._notify.success('Success', "Welcome message sent");
+        } else {
+          this._notify.error('Error', res.message);
+          this._notify.error('Error', res.data);
+        }
+      },
+      (error: any) => {
+        this._notify.error('Error', error);
+      }
+    );
   }
 
 

@@ -5,7 +5,7 @@ import { jsPDF } from 'jspdf';
 import * as htmlToImage from 'html-to-image';
 import * as moment from 'moment';
 import { ToastrsService } from 'src/app/services/toastrs.service';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import html2canvas from 'html2canvas';
 import { DashboardService } from 'src/app/services/dashboard.service';
 
@@ -20,7 +20,7 @@ export class BankInfoComponent implements OnInit, OnChanges {
   public accountNo: any = {};
   public ifsc: any = {};
   public name: any = {};
-  public btnStatus: any = null;
+  
   @ViewChild('scrollMe') private myScrollContainer: ElementRef<any> | any;
 
   @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef<any> | any;
@@ -96,13 +96,11 @@ export class BankInfoComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder
   ) {
     this.inputForm = this.formBuilder.group({
-      otp: [''],
-      transaction_types_id: [''],
-      amount: [''],
-      merchant_ref_id: [''],
-      bene_account_number: [''],
-      ifsc_code: [''],
-      recepient_name: ['']
+      otp: ['',Validators.required],
+      transaction_types_id: ['', Validators.required],
+      amount: ['', Validators.required],
+      bene_account_number: ['', Validators.required],
+      ifsc_code: ['', Validators.required]
     });
   }
 
@@ -119,31 +117,33 @@ export class BankInfoComponent implements OnInit, OnChanges {
 
   getOTP() {
     this._service.sendOTP().subscribe((res) => {
-      if (!!res && res.status) {
-        this._notify.success('Success', res.message);
-        this.btnStatus = null;
+      if (!!res && res.message == "Created" && res.statusCode == "201") {
+        this._notify.success('Success', "Please check your mobile for OTP");
+        
       } else
         this._notify.error('Error', res.message);
-        this.btnStatus = "true";
+        
     })
   }
 
   initiatePayouts() {
-    var input_value = this.inputForm.value;
-    input_value.merchant_ref_id = Math.floor(100000 + Math.random() * 900000);
-    this._service.initiatePayouts(this.inputForm.value).subscribe((res) => {
-      if (!!res && res.status) {
-        this.showInvoice = false;
-        this.res_data = res.data.payouts_body;
-        this.date = res.data.d;
-        this._notify.success('Success', res.message);
-      } else {
-        this._notify.error('Error', res.message);
-        this._notify.error('Error', res.data);
-      }
+    console.log(this.inputForm)
 
-      
-    });
+      if (this.inputForm.valid) {
+        this._service.initiatePayouts(this.inputForm.value).subscribe((res) => {
+        if (!!res && res.status) {
+          this.showInvoice = false;
+          this.res_data = res.data.payouts_body;
+          this.date = res.data.d;
+          this._notify.success('Success', res.message);
+        } else {
+          this._notify.error('Error', res.message);
+          this._notify.error('Error', res.data);
+        }
+      });
+    } else {
+      this._notify.error("Error", "Please enter all bank details")
+    }
   }
 
   convetToPDF() {

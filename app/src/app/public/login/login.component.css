@@ -207,6 +207,7 @@ section {
     color: #fff;
     transition: 0.5s;
     pointer-events: none;
+    transform: translateX(-26px) translateY(-33px);
 }
 
 .form .inputBx input:focus~span,

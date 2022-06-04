@@ -81,6 +81,7 @@
           <button
             class="mt_10 btn btn-outline-primary btn_pay"
             (click)="getOTP()"
+            type="button"
           >
             Requst for OTP
           </button>
@@ -91,7 +92,7 @@
           >
             Download Invoice
           </button>
-          <button [attr.disabled]="btnStatus" type="submit" class="mt_10 btn btn-outline-success btn_pay">Pay Now</button>
+          <button [disabled]="!inputForm.valid" type="submit" class="mt_10 btn btn-outline-success btn_pay">Pay Now</button>
         </div>
       </form>
       </ul>

@@ -7,13 +7,13 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./portals.component.css']
 })
 export class PortalsComponent implements OnInit {
-  wBidPrice: any = {};
+  wzPrice: any = {};
   setzpoff: boolean = true
   setzpon: boolean = false
   setwon: boolean = true
   setwoff: boolean = false
-  @Input("fetchWBidPrice") set function(data: any) {
-    this.wBidPrice = data;
+  @Input("fetchWZPrice") set function(data: any) {
+    this.wzPrice = data;
   }
   constructor() { }
 

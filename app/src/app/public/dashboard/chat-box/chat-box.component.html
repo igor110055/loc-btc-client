@@ -38,48 +38,16 @@
 
         <div class="message">
           <div class="triangle"></div>
-          <p>Will look into it</p>
+          <p>{{welcomeMsg}}</p>
         </div>
       </li>
-    <div #scrollMe *ngFor="let msg of currentChartRoom">
-      <li class="you" *ngIf="msg.username == currentChartUser.seller.username">
-        <div class="entete receiver">
-          <span class="status green"></span>
-          <h2>{{ msg.username }}</h2>
-          <h3>{{ msg.created_at | date: "medium" }}</h3>
-        </div>
-        
-        <div class="message">
-          <div class="triangle"></div>
-
-          {{ msg.msg }}
-          <i class="fa fa-copy" (click)="copyChat(msg.msg)"></i>
-        </div>
-      </li>
-      <li
-        *ngIf="msg.username == currentChartUser.buyer.username"
-        class="me sender"
-      >
-        <div class="entete">
-          <h2>Me</h2>
-          <h3>{{ msg.created_at | date: "medium" }}</h3>
-          <span class="status blue"></span>
-        </div>
-        
-
-        <div class="message">
-          <div class="triangle"></div>
-          {{ msg.msg }}
-        </div>
-      </li>
-    </div>
   </ul>
   <footer class="row">
-    <textarea placeholder="Type your message"></textarea>
+    <textarea placeholder="Type your message" [(ngModel)]="postedMessage"></textarea>
     <img
       src="assets/msg_sent.png"
       alt=""
-      (click)="sendMessage(input_text)"
+      (click)="sendMessage()"
       class="msg_send btn"
     />
   </footer>
