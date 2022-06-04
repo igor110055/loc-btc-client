@@ -17,7 +17,7 @@ export class AdsListComponent implements OnInit, OnDestroy {
   @Input() public set fetchUpdatedMarginData(data: any) {
     this.val = data
   }
-  
+
 
   public add_list : any = {};
   public comp_list: any = [];
@@ -30,15 +30,16 @@ export class AdsListComponent implements OnInit, OnDestroy {
   private adsDetailsSub: Subscription = new Subscription();
   private wzssDetailsSub: Subscription = new Subscription();
   public wzsData: any = {};
+  public updateData:any={}
   public currentBtn: number = 0;
 
-  
-  constructor(private _service: DashboardService, 
-    private _notify: ToastrsService, 
-    private _zone: NgZone, 
+
+  constructor(private _service: DashboardService,
+    private _notify: ToastrsService,
+    private _zone: NgZone,
     private _socketService: SocketService,
     private elem: ElementRef) { }
-  
+
   ngOnInit(): void {
     this.getAdsData();
     this.getPriceUpdate()
@@ -63,17 +64,17 @@ export class AdsListComponent implements OnInit, OnDestroy {
 
   onSelect(obj: any, i: number) {
     this.currentBtn = i;
-    this.showdetails = true;    
-    this.priceUpdate = true;  
+    this.showdetails = true;
+    this.priceUpdate = true;
     this.val = 1;
     this._service.getMargin().subscribe((res: any) => {
       this.val = res.data.BTCINR.margin;
       this.postAdsDetails.emit({"margin":res.data.BTCINR.margin, "asset": res.data.BTCINR.currency});
     }, (error: any) => {
-      this._notify.error('Error', error); 
+      this._notify.error('Error', error);
     })
     this.wazirxBidPrice = 0;
-    this.wazirxUPPrice = 0; 
+    this.wazirxUPPrice = 0;
     this.wzssDetailsSub = this._socketService.getWazirxDetails().subscribe((data: any) => {
       console.log(data);
       this.wzsData = data;
@@ -120,15 +121,19 @@ export class AdsListComponent implements OnInit, OnDestroy {
     });
   }
 
+
   getPriceUpdate() {
+
     this.adsDetailsSub = this._socketService.getPriceUpdate().subscribe((data: any) => {
-      console.log(data);
-    },(error) => {
-      console.log(error)
+      this.updateData = data;
+      console.log("Update ",this.updateData.clientAdPrice)
+      this.adsPrice =this.updateData.clientAdPrice;
+
+         },(error) => {
       this._notify.error("Error", error);
     })
   }
-  
+
 
   ngOnDestroy(): void {
     this.adsDetailsSub.unsubscribe();
