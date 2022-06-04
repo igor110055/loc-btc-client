@@ -47,7 +47,8 @@
         class="comp_ids"
       >
         <span class="id_list">
-          {{comp_id.id}} {{comp_id.adsprice}}
+          <!-- {{comp_id.id}} {{comp_id.adsprice}} -->
+          <a href="https://localbitcoins.com/ad/{{comp_id}}" target="_blank">{{comp_id}}</a>
           <a
             class="text-danger close_b btn"
             (click)="onRemoveCompById(comp_id)"

@@ -13,6 +13,7 @@ import { ToastrsService } from 'src/app/services/toastrs.service';
 export class AdsListComponent implements OnInit, OnDestroy {
 
   @Output() postAdsDetails = new EventEmitter<any>();
+  @Output() postWPBidPrice = new EventEmitter<any>();
   @Input() public set fetchUpdatedMarginData(data: any) {
     this.val = data
   }
@@ -51,6 +52,9 @@ export class AdsListComponent implements OnInit, OnDestroy {
         this.add_list = res.data.ad_list[0].data;
         this.adsPrice = this.add_list.temp_price ? this.add_list.temp_price : this.add_list.price_equation;
         this.onSelect(this.add_list[0], 0);
+      } else {
+        this._notify.error('Error', "Couldn't fetch active ads due to api error please wait for 20 seconds");
+        this.getAdsData();
       }
     },(error: any) => {
       this._notify.error('Error', error);
@@ -71,8 +75,10 @@ export class AdsListComponent implements OnInit, OnDestroy {
     this.wazirxBidPrice = 0;
     this.wazirxUPPrice = 0; 
     this.wzssDetailsSub = this._socketService.getWazirxDetails().subscribe((data: any) => {
+      console.log(data);
       this.wzsData = data;
       this.wazirxBidPrice = this.wzsData && this.wzsData.wp ? parseFloat(this.wzsData.wp) : this.wazirxBidPrice;
+      this.postWPBidPrice.emit({"price": this.wazirxBidPrice});
       this.wazirxUPPrice = this.wzsData && this.wzsData.wup ? parseFloat(this.wzsData.wup) : this.wazirxUPPrice
       this.val = this.wzsData && this.wzsData.uplimit ? parseFloat(this.wzsData.uplimit) * 100 : this.val;
     },(error) => {

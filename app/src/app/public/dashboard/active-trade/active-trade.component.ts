@@ -37,7 +37,7 @@ export class ActiveTradeComponent implements OnInit, OnDestroy {
     this.currentChartRoom = [];
     this.currentChartUser = item;
     this.postChatStatus.emit({
-      orderNo: item.orderNumber,
+      orderNo: item.data.advertisement.id,
       status: true,
       selllerName: item.sellerNickname,
     });
@@ -76,6 +76,154 @@ export class ActiveTradeComponent implements OnInit, OnDestroy {
   }
 
   openTradesMessages() {
+
+    var res1 = [
+      {
+        "data": {
+          "created_at": "2013-12-06T15:23:01.61",
+          "buyer": {
+              "username": "hylje",
+              "trade_count": "30+",
+              "feedback_score": "100",
+              "name": "hylje (30+; 100)",
+              "last_online": "2013-12-19T08:28:16+00:00",
+              "real_name": "",
+              "company_name": "",
+              "countrycode_by_ip": "",
+              "countrycode_by_phone_number": ""
+          },
+          "seller": {
+              "username": "jeremias",
+              "trade_count": "100+",
+              "feedback_score": "100",
+              "name": "jeremias (100+; 100)",
+              "last_online": "2013-12-19T06:28:51+00:00"
+          },
+          "reference_code": "123",
+          "currency": "EUR",
+          "amount": "105.55",
+          "amount_btc": "190",
+          "fee_btc": "1.9",
+          "exchange_rate_updated_at": "2013-06-20T15:23:01+00:00",
+          "advertisement": {
+             "id": 123,
+             "trade_type": "ONLINE_SELL",
+             "advertiser": {
+                 "username": "jeremias",
+                 "trade_count": "100+",
+                 "feedback_score": "100",
+                 "name": "jeremias (100+; 100)",
+                 "last_online": "2013-12-19T06:28:51.604754+00:00"
+             }
+          },
+          "contact_id": 1234,
+          "canceled_at": null,
+          "escrowed_at": "2013-12-06T15:23:01+00:00",
+          "funded_at": "2013-12-06T15:23:01+00:00",
+          "payment_completed_at": "2013-12-06T15:23:01+00:00",
+          "disputed_at": null,
+          "closed_at": null,
+          "released_at": null,
+          "is_buying": true,
+          "is_selling": false,
+          "account_details": "",
+          "account_info": "",
+          "floating": ""
+        },
+        "actions": {
+          "mark_as_paid_url": "/api/contact_mark_as_paid/1/",
+          "advertisement_public_view": "/ads/123",
+          "message_url": "/api/contact_messages/1234",
+          "message_post_url": "/api/contact_message_post/1234"
+        }
+      },{
+        "data": {
+          "created_at": "2013-12-08T15:23:01.61",
+          "buyer": {
+              "username": "hylje",
+              "trade_count": "30+",
+              "feedback_score": "100",
+              "name": "hylje (30+; 100)",
+              "last_online": "2013-12-19T08:28:16+00:00",
+              "real_name": "",
+              "company_name": "",
+              "countrycode_by_ip": "",
+              "countrycode_by_phone_number": ""
+          },
+          "seller": {
+              "username": "jeremias",
+              "trade_count": "100+",
+              "feedback_score": "100",
+              "name": "jeremias (100+; 100)",
+              "last_online": "2013-12-19T06:28:51+00:00"
+          },
+          "reference_code": "123",
+          "currency": "EUR",
+          "amount": "105.55",
+          "amount_btc": "190",
+          "fee_btc": "1.9",
+          "exchange_rate_updated_at": "2013-06-20T15:23:01+00:00",
+          "advertisement": {
+             "id": 123,
+             "trade_type": "ONLINE_SELL",
+             "advertiser": {
+                 "username": "jeremias",
+                 "trade_count": "100+",
+                 "feedback_score": "100",
+                 "name": "jeremias (100+; 100)",
+                 "last_online": "2013-12-19T06:28:51.604754+00:00"
+             }
+          },
+          "contact_id": 1234,
+          "canceled_at": null,
+          "escrowed_at": "2013-12-06T15:23:01+00:00",
+          "funded_at": "2013-12-06T15:23:01+00:00",
+          "payment_completed_at": "2013-12-06T15:23:01+00:00",
+          "disputed_at": null,
+          "closed_at": null,
+          "released_at": null,
+          "is_buying": true,
+          "is_selling": false,
+          "account_details": "",
+          "account_info": "",
+          "floating": ""
+        },
+        "actions": {
+          "mark_as_paid_url": "/api/contact_mark_as_paid/1/",
+          "advertisement_public_view": "/ads/123",
+          "message_url": "/api/contact_messages/1234",
+          "message_post_url": "/api/contact_message_post/1234"
+        }
+      }
+    ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    this.open_trades_messages = res1.sort((a:any, b: any) =>{console.log(b.data.created_at + "and a is " + a.data.created_at); return new Date(b.data.created_at).getTime() - new Date(a.data.created_at).getTime()});
+    console.log(this.open_trades_messages)
+
+
+
+
+
     interval(5000).pipe(
       map(() => this._socketService.setUserOrder())
     ).subscribe();
@@ -85,13 +233,150 @@ export class ActiveTradeComponent implements OnInit, OnDestroy {
         console.log("getTradeDetails");
         console.log(res);
         if (res && res.data && res.message == 'success') {
-          //this.open_trades_messages = res.data.filter((data: any) => data.orderStatus == 1 || data.orderStatus == 2 || data.orderStatus == 3)
-          this.open_trades_messages = res.data.filter((data: any) => data.orderStatus == 7)
-          this.open_trades_messages = this.open_trades_messages.sort((a:any, b: any) => b.createTime - a.createTime);
-          this.open_trades_messages.length = 5;
-          // this.open_trades_messages = res.data.sort((a: any, b: any) => b.createTime - a.createTime);
+
+          // var res1 = [
+          //   {
+          //     "data": {
+          //       "created_at": "2013-12-08T15:23:01.61",
+          //       "buyer": {
+          //           "username": "hylje",
+          //           "trade_count": "30+",
+          //           "feedback_score": "100",
+          //           "name": "hylje (30+; 100)",
+          //           "last_online": "2013-12-19T08:28:16+00:00",
+          //           "real_name": "",
+          //           "company_name": "",
+          //           "countrycode_by_ip": "",
+          //           "countrycode_by_phone_number": ""
+          //       },
+          //       "seller": {
+          //           "username": "jeremias",
+          //           "trade_count": "100+",
+          //           "feedback_score": "100",
+          //           "name": "jeremias (100+; 100)",
+          //           "last_online": "2013-12-19T06:28:51+00:00"
+          //       },
+          //       "reference_code": "123",
+          //       "currency": "EUR",
+          //       "amount": "105.55",
+          //       "amount_btc": "190",
+          //       "fee_btc": "1.9",
+          //       "exchange_rate_updated_at": "2013-06-20T15:23:01+00:00",
+          //       "advertisement": {
+          //          "id": 123,
+          //          "trade_type": "ONLINE_SELL",
+          //          "advertiser": {
+          //              "username": "jeremias",
+          //              "trade_count": "100+",
+          //              "feedback_score": "100",
+          //              "name": "jeremias (100+; 100)",
+          //              "last_online": "2013-12-19T06:28:51.604754+00:00"
+          //          }
+          //       },
+          //       "contact_id": 1234,
+          //       "canceled_at": null,
+          //       "escrowed_at": "2013-12-06T15:23:01+00:00",
+          //       "funded_at": "2013-12-06T15:23:01+00:00",
+          //       "payment_completed_at": "2013-12-06T15:23:01+00:00",
+          //       "disputed_at": null,
+          //       "closed_at": null,
+          //       "released_at": null,
+          //       "is_buying": true,
+          //       "is_selling": false,
+          //       "account_details": "",
+          //       "account_info": "",
+          //       "floating": ""
+          //     },
+          //     "actions": {
+          //       "mark_as_paid_url": "/api/contact_mark_as_paid/1/",
+          //       "advertisement_public_view": "/ads/123",
+          //       "message_url": "/api/contact_messages/1234",
+          //       "message_post_url": "/api/contact_message_post/1234"
+          //     }
+          //   },{
+          //     "data": {
+          //       "created_at": "2013-12-06T15:23:01.61",
+          //       "buyer": {
+          //           "username": "hylje",
+          //           "trade_count": "30+",
+          //           "feedback_score": "100",
+          //           "name": "hylje (30+; 100)",
+          //           "last_online": "2013-12-19T08:28:16+00:00",
+          //           "real_name": "",
+          //           "company_name": "",
+          //           "countrycode_by_ip": "",
+          //           "countrycode_by_phone_number": ""
+          //       },
+          //       "seller": {
+          //           "username": "jeremias",
+          //           "trade_count": "100+",
+          //           "feedback_score": "100",
+          //           "name": "jeremias (100+; 100)",
+          //           "last_online": "2013-12-19T06:28:51+00:00"
+          //       },
+          //       "reference_code": "123",
+          //       "currency": "EUR",
+          //       "amount": "105.55",
+          //       "amount_btc": "190",
+          //       "fee_btc": "1.9",
+          //       "exchange_rate_updated_at": "2013-06-20T15:23:01+00:00",
+          //       "advertisement": {
+          //          "id": 123,
+          //          "trade_type": "ONLINE_SELL",
+          //          "advertiser": {
+          //              "username": "jeremias",
+          //              "trade_count": "100+",
+          //              "feedback_score": "100",
+          //              "name": "jeremias (100+; 100)",
+          //              "last_online": "2013-12-19T06:28:51.604754+00:00"
+          //          }
+          //       },
+          //       "contact_id": 1234,
+          //       "canceled_at": null,
+          //       "escrowed_at": "2013-12-06T15:23:01+00:00",
+          //       "funded_at": "2013-12-06T15:23:01+00:00",
+          //       "payment_completed_at": "2013-12-06T15:23:01+00:00",
+          //       "disputed_at": null,
+          //       "closed_at": null,
+          //       "released_at": null,
+          //       "is_buying": true,
+          //       "is_selling": false,
+          //       "account_details": "",
+          //       "account_info": "",
+          //       "floating": ""
+          //     },
+          //     "actions": {
+          //       "mark_as_paid_url": "/api/contact_mark_as_paid/1/",
+          //       "advertisement_public_view": "/ads/123",
+          //       "message_url": "/api/contact_messages/1234",
+          //       "message_post_url": "/api/contact_message_post/1234"
+          //     }
+          //   }
+          // ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          // this.open_trades_messages = res1.sort((a:any, b: any) => b.created_at - a.created_at);
         }else {
-          this._notify.error('Error', "Something went wrong");
+          this._notify.error('Error', "Something went wrong active trade");
         }
       },
       (error: any) => {

@@ -10,6 +10,7 @@ export class DashboardComponent implements OnInit {
   bankDetailsData: any;
   adsDetailsData: any;
   updatedMarginData: any;
+  postWBidPrice: any;
 
 
   constructor() { }
@@ -27,5 +28,8 @@ export class DashboardComponent implements OnInit {
   }
   handleDataCompListUpdatedMargin(data: any) {
     this.updatedMarginData = data;
+  }
+  handleDataWBidPrice(data: any) {
+    this.postWBidPrice= data;
   }
 }

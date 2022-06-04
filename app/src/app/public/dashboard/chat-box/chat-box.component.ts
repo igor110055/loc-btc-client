@@ -32,10 +32,7 @@ export class ChatBoxComponent implements OnInit {
       //this._service.getChatDetails(this.url).subscribe((res: any) => {
       this._service.getOrderDetails(data.orderNo).subscribe((res: any) => {
         if (res && res.data && res.data.message == "success") {
-          this.chatLists = res.data.data;
-          this.accountNo = this.chatLists.payMethods[0].fields.filter((data: any) => data.fieldContentType == "pay_account");
-          this.ifsc = this.chatLists.payMethods[0].fields.filter((data: any) => data.fieldName.includes("IFSC"));
-          this.name = this.chatLists.payMethods[0].fields.filter((data: any) => data.fieldContentType == "payee");
+          this.chatLists = res;
           this.postBankDetails.emit(false)
         }
       },(error) => this._notify.error("Error", "Something went wrong"))

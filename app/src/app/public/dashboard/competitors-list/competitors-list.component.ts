@@ -68,7 +68,7 @@ export class CompetitorsListComponent implements OnInit {
   };
 
   onRemoveCompById(comp_id: any) {
-    this._service.onRemoveCompById(comp_id.id).subscribe((res) => {
+    this._service.onRemoveCompById(comp_id).subscribe((res) => {
       if (!!res && res.message == "Success") {
         this._notify.success('Success', res.message);
         this.getCompList();
@@ -81,13 +81,18 @@ export class CompetitorsListComponent implements OnInit {
     this._service.getCompetitor().subscribe((res) => {
       if (!!res && res.message == "Success") {
         if (res.data.length > 0) {
-          for(var x = 0; x < res.data.length; x++) {
-            this.getCompDetails(res.data[x])
-          }
+          this.comp_list = res.data;
+          // for(var x = 0; x < res.data.length; x++) {
+          //   this.getCompDetails(res.data[x])
+          // }
         } else {
+          console.log("in making null comp list");
           this._notify.error('Error', res.message);
           this.comp_list = [];
         }
+      } else {
+          this._notify.error('Error', res.message);
+          this.comp_list = [];
       }
     });
   }
@@ -114,9 +119,10 @@ export class CompetitorsListComponent implements OnInit {
           this._notify.success('Success', res.message);
           if (res.data) {
             let amendedList = Object.values(res.data);
-            for(var x = 0; x < amendedList.length; x++) {
-              this.getCompDetails(amendedList[x])
-            }
+            this.comp_list = amendedList;
+            // for(var x = 0; x < amendedList.length; x++) {
+            //   this.getCompDetails(amendedList[x])
+            // }
           }
         } else {
             this._notify.error('Error', res.message);

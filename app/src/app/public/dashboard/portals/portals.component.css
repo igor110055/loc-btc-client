@@ -1,0 +1,35 @@
+input[type="radio"] {
+    left: -9999px;
+    position: absolute;
+}
+
+.wazirxsp input[type="radio"]:checked + label {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #ffffff;
+}
+
+
+
+.zebpaysp input[type="radio"]:checked + label {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #ffffff;
+}
+
+label:hover {
+    background-color: #ffffff;
+    color: #007bff;
+}
+
+.poratals-container {
+    background-color: #223168;
+    color: #ffffff;
+    border: 2px solid #101126;
+    padding: 15px 10px;
+    margin-top: 20px;
+}
+
+.mrgn15 {
+    margin: 0px 15px;
+}

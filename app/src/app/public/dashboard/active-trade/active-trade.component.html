@@ -28,18 +28,18 @@
       <div (click)="openChart(item, i)" class="text-left pdglft-15 pointer">
         <div (click)="openChart(item, i)" class="capital-text order-header">
           <div>
-            <span style="font-size: 15px"> {{ item.sellerNickname }}  </span>
+            <span style="font-size: 15px"> {{ item.data.seller.username }}  </span>
           </div>
           <div>
-            <span class="status orange"></span> {{item.createTime | date:'dd MMM yyyy, HH:mm'}}
+            <span class="status orange"></span> {{item.data.created_at | date:'dd MMM yyyy, HH:mm'}}
           </div>
         </div>
         <div class="order-header">
           <div>
-            <span class="status orange"></span> INR: {{ item.totalPrice | number : '1.2-2' }}
+            <span class="status orange"></span> INR: {{ item.data.amount | number : '1.2-2' }}
           </div>
           <div>
-            <span class="status orange"></span>{{ item.asset }}: {{ item.amount | number : '1.2-2' }}
+            <span class="status orange"></span>BTC: {{ item.data.amount_btc | number : '1.2-2' }}
           </div>          
         </div>
       </div>

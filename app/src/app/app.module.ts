@@ -25,6 +25,7 @@ import { ChatBoxComponent } from './public/dashboard/chat-box/chat-box.component
 import { BankInfoComponent } from './public/dashboard/bank-info/bank-info.component';
 import { NavbarComponent } from './public/dashboard/navbar/navbar.component';
 import { AuthInterceptorService } from './services/auth.interceptor.service';
+import { PortalsComponent } from './public/dashboard/portals/portals.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AuthInterceptorService } from './services/auth.interceptor.service';
     ActiveTradeComponent,
     ChatBoxComponent,
     BankInfoComponent,
-    NavbarComponent
+    NavbarComponent,
+    PortalsComponent
   ],
   imports: [
     BrowserModule,
