@@ -22,7 +22,7 @@ label:hover {
     color: #007bff;
 }
 
-.poratals-container {
+.portals-container {
     background-color: #223168;
     color: #ffffff;
     border: 2px solid #101126;
@@ -32,4 +32,12 @@ label:hover {
 
 .mrgn15 {
     margin: 0px 15px;
+}
+.portal-sub-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.portal-sub-container > div {
+    line-height: 2.5;
 }

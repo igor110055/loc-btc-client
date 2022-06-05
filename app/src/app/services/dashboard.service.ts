@@ -23,7 +23,7 @@ export class DashboardService {
   }
 
   getOrderDetails(advNo: string){
-    return this.generalService.postService("/api/localbitcoin/getContactMessages/" + advNo, "btc")
+    return this.generalService.getService("/api/localbitcoin/getContactMessages/" + advNo, "btc")
   }
 
   getDetailsById(id:number){
@@ -35,7 +35,7 @@ export class DashboardService {
   }
 
   initiatePayouts(data:any ){
-    return this.generalService.postService(`/payment/initiate-payouts/`, data, "binance")
+    return this.generalService.postService(`/api/payment/initiate_payouts`, data, "btc")
   }
 
   contactMessageSend(id:any,data:any ){

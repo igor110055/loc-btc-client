@@ -56,8 +56,7 @@ export class AdsListComponent implements OnInit, OnDestroy {
         this.adsPrice = this.add_list.temp_price ? this.add_list.temp_price : this.add_list.price_equation;
         this.onSelect(this.add_list[0], 0);
       } else {
-        this._notify.error('Error', "Couldn't fetch active ads due to api error please wait for 20 seconds");
-        this.getAdsData();
+        this._notify.error('Error', "Couldn't fetch active ads due to api error please wait for 20 seconds and login again");
       }
     },(error: any) => {
       this._notify.error('Error', error);

@@ -26,13 +26,14 @@ export class BankInfoComponent implements OnInit, OnChanges {
   @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef<any> | any;
   @Input() public set fetchBankData(data: any) {
     if(data) {
-      this.accountNo = data[0].fields.filter((data: any) => data.fieldContentType == "pay_account");
-      this.ifsc = data[0].fields.filter((data: any) => data.fieldName.includes("IFSC"));
-      this.name = data[0].fields.filter((data: any) => data.fieldContentType == "payee");
+      console.log(data)
+      this.accountNo = data.accNo;
+      this.ifsc =  data.ifsc;
+      this.name =  data.name;
       this.inputForm.patchValue({
-        bene_account_number: this.accountNo[0].fieldValue,
-        ifsc_code: this.ifsc[0].fieldValue,
-        recepient_name: this.name[0].fieldValue
+        bene_account_number: this.accountNo,
+        ifsc_code: this.ifsc,
+        recepient_name: this.name
       })
     } else {
       this.inputForm.patchValue({
@@ -100,7 +101,8 @@ export class BankInfoComponent implements OnInit, OnChanges {
       transaction_types_id: ['', Validators.required],
       amount: ['', Validators.required],
       bene_account_number: ['', Validators.required],
-      ifsc_code: ['', Validators.required]
+      ifsc_code: ['', Validators.required],
+      recepient_name: ['', Validators.required]
     });
   }
 
@@ -117,7 +119,7 @@ export class BankInfoComponent implements OnInit, OnChanges {
 
   getOTP() {
     this._service.sendOTP().subscribe((res) => {
-      if (!!res && res.message == "Created" && res.statusCode == "201") {
+      if (res.message == "Created" && res.statusCode == "201") {
         this._notify.success('Success', "Please check your mobile for OTP");
         
       } else

@@ -34,7 +34,7 @@ main header h3{font-size:14px;font-weight:normal;color:#7e818a;}
 #chat .you .message{background-color:#58b666;}
 #chat .me .message{background-color:#2673a3;}
 #chat .triangle{width:0;height:0;border-style:solid;border-width:0 10px 10px 10px;}
-#chat .you .triangle{border-color:transparent transparent #58b666 transparent;margin-left:15px;position: absolute;top: -10px;}
+#chat .you .triangle{border-color:transparent transparent #58b666 transparent;margin-left:-9px;position: absolute;top: -10px;}
 #chat .me .triangle{border-color:transparent transparent #2673a3 transparent;position: absolute;top: -10px;}
 main footer{height:155px;padding:20px 0px 10px 20px;}
 main footer textarea{resize:none;border:none;display:block;height:91px;border-radius:3px;padding:20px;font-size:13px;width:80%;margin-bottom:13px;}

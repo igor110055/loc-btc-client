@@ -1,32 +1,40 @@
 <div class="col-xs-12 col-sm-12 col-md-12">
-    <div class="poratals-container">
-        <div>
-            <span>Wazirx Sell Price:</span>
-            <span class="mrgn15">{{wzPrice.wzSellPrice}}</span>
-            <span class="wazirxsp">
-                <div class="btn-group" role="group" aria-label="Radio buttons for switching between wazirx and zebpay">
-                    <input type="radio" value="on" name="wazirxsp" class="btn-check" id="wazirxsp1"  [checked]="setwon" (change)="selectedWP($event)"/>
-                    <label class="btn btn-outline-primary" for="wazirxsp1">ON</label>
-                </div>
-                <div class="btn-group" role="group" aria-label="Radio buttons for switching between wazirx adn zebpay">
-                    <input type="radio" value="off" name="wazirxsp" class="btn-check" id="wazirxsp2" [checked]="setwoff" (change)="selectedWP($event)"/>
-                    <label class="btn btn-outline-primary" for="wazirxsp2">OFF</label>
-                </div>
-            </span>
+    <div class="portals-container">
+        <div class="portal-sub-container">
+            <div>
+                <span>Wazirx Sell Price:</span>
+                <span class="mrgn15">{{wzPrice.wzSellPrice}}</span>
+            </div>
+            <div>
+                <span class="wazirxsp">
+                    <div class="btn-group" role="group" aria-label="Radio buttons for switching between wazirx and zebpay">
+                        <input type="radio" value="on" name="wazirxsp" class="btn-check" id="wazirxsp1"  [checked]="setwon" (change)="selectedWP($event)"/>
+                        <label class="btn btn-outline-primary" for="wazirxsp1">ON</label>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Radio buttons for switching between wazirx adn zebpay">
+                        <input type="radio" value="off" name="wazirxsp" class="btn-check" id="wazirxsp2" [checked]="setwoff" (change)="selectedWP($event)"/>
+                        <label class="btn btn-outline-primary" for="wazirxsp2">OFF</label>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div>
-            <span>Zebpay Sell Price:</span>
-            <span class="mrgn15">{{wzPrice.zebSellPrice}}</span>
-            <span class="zebpaysp">
-                <div class="btn-group" role="group" aria-label="Radio buttons for switching between wazirx and zebpay">
-                    <input type="radio" value="on" name="zebpaysp" class="btn-check" id="zebpaysp1"  [checked]="setzpon" (change)="selectedZP($event)"/>
-                    <label class="btn btn-outline-primary" for="zebpaysp1">ON</label>
-                </div>
-                <div class="btn-group" role="group" aria-label="Radio buttons for switching between zebpay adn zebpay">
-                    <input type="radio" value="off" name="zebpaysp" class="btn-check" id="zebpaysp2" [checked]="setzpoff" (change)="selectedZP($event)"/>
-                    <label class="btn btn-outline-primary" for="zebpaysp2">OFF</label>
-                </div>
-            </span>
+        <div class="portal-sub-container">
+            <div>
+                <span>Zebpay Sell Price:</span>
+                <span class="mrgn15">{{wzPrice.zebSellPrice}}</span>
+            </div>
+            <div>
+                <span class="zebpaysp">
+                    <div class="btn-group" role="group" aria-label="Radio buttons for switching between wazirx and zebpay">
+                        <input type="radio" value="on" name="zebpaysp" class="btn-check" id="zebpaysp1"  [checked]="setzpon" (change)="selectedZP($event)"/>
+                        <label class="btn btn-outline-primary" for="zebpaysp1">ON</label>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Radio buttons for switching between zebpay adn zebpay">
+                        <input type="radio" value="off" name="zebpaysp" class="btn-check" id="zebpaysp2" [checked]="setzpoff" (change)="selectedZP($event)"/>
+                        <label class="btn btn-outline-primary" for="zebpaysp2">OFF</label>
+                    </div>
+                </span>
+            </div>
         </div>
     </div>
 </div>

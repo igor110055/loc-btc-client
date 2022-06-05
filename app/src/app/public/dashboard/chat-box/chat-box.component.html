@@ -11,34 +11,41 @@
     /> -->
   </header>
   <ul id="chat">
-      <li class="you">
-        <div class="entete receiver">
-          <span class="status green"></span>
-          <h2 class="capital-text">{{chatLists.sender.name}}</h2>
-          <h3>{{chatLists.msg}}</h3>
-        </div>
-       
-        <div class="message">
-          <div class="triangle"></div>
-          <p>{{chatLists.price}}</p>
-          <div *ngIf="chatLists.payType === 'IMPS' || chatLists.payType === 'NEFT' || chatLists.payType === 'RTGS'" class="bank-details">
-            <p>Account No: {{accountNo[0].fieldValue}}</p>
-            <p>IFSC Code: {{ifsc[0].fieldValue}}</p>
-            <p>Account Holder Name: {{name[0].fieldValue}}</p>
-          </div> 
-          <i *ngIf="chatLists.payType === 'IMPS' || chatLists.payType === 'NEFT' || chatLists.payType === 'RTGS'" class="fa fa-copy pointer" (click)="copyChat(chatLists.payMethods)"></i>
-        </div>
-      </li>
-      <li class="me sender">
-        <div class="entete">
-          <h2>You</h2>
-          <span class="status blue"></span>
-        </div>
+      <li *ngFor="let message of chatLists; let i = index;">
+        <div class="you"  *ngIf="i % 2 === 0">
+          <div class="entete receiver">
+            <span class="status green"></span>
+            <h2 class="capital-text">{{message.sender.name}}</h2>
+          </div>
+          <div class="message" *ngIf="!message.acDetails.ifsc">
+            <div class="triangle"></div>
+            <h3>{{message.msg}}</h3>
+          </div>
         
+          <div class="message" *ngIf="message.acDetails.ifsc">
+            <div class="triangle"></div>
+            <div class="bank-details">
+              <div class="message">
+                <p>Account No: {{message.acDetails.accNo}}</p>
+                <p>IFSC Code: {{message.acDetails.ifsc}}</p>
+                <p>Account Holder Name: {{message.acDetails.name}}</p>
+              </div>
+            </div> 
+            <i class="fa fa-copy pointer" (click)="copyChat(message.acDetails)"></i>
+          </div>
+        </div>
+        <div class="me" *ngIf="i % 2 !== 0">
+          <div class="entete sender">
+            <h2>You</h2>
+            <span class="status blue"></span>
+          </div>
+          
 
-        <div class="message">
-          <div class="triangle"></div>
-          <p>{{welcomeMsg}}</p>
+          <div class="message">
+            <div class="triangle"></div>
+            <!-- <h2 class="capital-text">{{message.sender.name}}</h2> -->
+            <h3>{{message.msg}}</h3>
+          </div>
         </div>
       </li>
   </ul>

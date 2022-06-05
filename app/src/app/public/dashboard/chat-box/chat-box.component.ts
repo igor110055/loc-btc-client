@@ -15,7 +15,7 @@ import { ToastrsService } from 'src/app/services/toastrs.service';
   styleUrls: ['./chat-box.component.css']
 })
 export class ChatBoxComponent implements OnInit {
-  chatLists: any ={};
+  chatLists: any = [];
   url: string = "";
   showChatBox: boolean = false;
   public accountNo: any = {};
@@ -31,35 +31,9 @@ export class ChatBoxComponent implements OnInit {
   @Input() set fetchPostStatus(data:any) {
     if(data) {
       this.showChatBox = data.status;
-
-      this.chatLists =
-        {
-          "msg": "Let me know how the offer sounds to you",
-          "sender": {
-              "id": 123,
-              "name": "bitcoinbaron (0)",
-              "username": "bitcoinbaron",
-              "trade_count": 0,
-              "last_online": "2013-12-17T03:31:12.382862+00:00"
-          },
-          "created_at": "2013-12-19T16:03:38.218039",
-          "is_admin": false,
-          "attachment_name": "cnXvo5sV6eH4-some_image.jpg",
-          "attachment_type": "image/jpeg",
-          "attachment_url": "https://localbitcoins.com/api/..."
-      }
-    
-      
-      this.setWelcomeMessage();
       this.orderNo = data.orderNo;
-      //this.orderNo = data.orderNo;
-      // this._service.getOrderDetails(data.orderNo).subscribe((res: any) => {
-      //   if (res && res.data && res.data.message == "success") {
-      //     this.chatLists = res;
-      //     this.setWelcomeMessage();
-      //     this.postBankDetails.emit(false)
-      //   }
-      // },(error) => this._notify.error("Error", "Something went wrong"))
+      this.setChatMessages();
+      
     }
   }
 
@@ -120,10 +94,31 @@ export class ChatBoxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
-
   }
 
+  setChatMessages() {
+    this._service.getOrderDetails(this.orderNo.toString()).subscribe((res: any) => {
+      if (res && res.data && res.message == "OK") {
+        console.log(res)
+        res.data.message_list.map((obj:any) => { obj.acDetails = {}  })
+        this.chatLists = res.data.message_list;
+        this.chatLists.map((data: any) => {
+          console.log(data)
+          if(data.msg.includes("IFSC")) {
+            var acDetails = data.msg.split("\n");
+            console.log(acDetails);
+            if(acDetails[3]) {
+              data.acDetails.name = acDetails[1].split(":")[1]
+              data.acDetails.accNo = acDetails[2].split(":")[1]
+              data.acDetails.ifsc = acDetails[3].split(":")[1]
+            } 
+          };
+        })
+        this.setWelcomeMessage();
+        this.postBankDetails.emit(false)
+      }
+    },(error) => this._notify.error("Error", "Something went wrong"))
+  } 
   
   copyChat(msg:any)
   {
@@ -131,9 +126,7 @@ export class ChatBoxComponent implements OnInit {
   
   }
 
-  getOTP() {
-  }
-
+  
 
   convetToPDF()
    {
@@ -160,7 +153,9 @@ export class ChatBoxComponent implements OnInit {
     var messageToPost = this.postedMessage;
     console.log(messageToPost);
     this._service.contactMessageSend(this.orderNo, messageToPost).subscribe((res) => {
-      this._notify.success("Success", "Message posted successfully")
+      this._notify.success("Success", "Message posted successfully");
+      this.chatLists = [];
+      this.setChatMessages();
     }, (error) => {
       this._notify.error("Error", "Message coudn't be posted plese try again")
     })
