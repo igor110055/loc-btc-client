@@ -130,7 +130,7 @@ export class AdsListComponent implements OnInit, OnDestroy {
       this.updateData = data;
       console.log("Update ",this.updateData.clientAdPrice)
       this.adsPrice =this.updateData.clientAdPrice;
-
+          this._notify.success("Success","Price Updated ")
          },(error) => {
       this._notify.error("Error", error);
     })

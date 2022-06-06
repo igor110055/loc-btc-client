@@ -20,7 +20,7 @@ export class BankInfoComponent implements OnInit, OnChanges {
   public accountNo: any = {};
   public ifsc: any = {};
   public name: any = {};
-  
+
   @ViewChild('scrollMe') private myScrollContainer: ElementRef<any> | any;
 
   @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef<any> | any;
@@ -107,24 +107,25 @@ export class BankInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    
-    
+
+
   }
   ngOnChanges(changes: SimpleChanges): void {
-    
-  }
-  
 
-  
+  }
+
+
+
 
   getOTP() {
     this._service.sendOTP().subscribe((res) => {
+      console.log("order no from get otp",this.orderNo)
       if (res.message == "Created" && res.statusCode == "201") {
         this._notify.success('Success', "Please check your mobile for OTP");
-        
+
       } else
         this._notify.error('Error', res.message);
-        
+
     })
   }
 
@@ -133,10 +134,21 @@ export class BankInfoComponent implements OnInit, OnChanges {
 
       if (this.inputForm.valid) {
         this._service.initiatePayouts(this.inputForm.value).subscribe((res) => {
-        if (!!res && res.status) {
+        if (!!res && res.statusCode) {
           this.showInvoice = false;
-          this.res_data = res.data.payouts_body;
+          this.res_data = res.data;
           this.date = res.data.d;
+          console.log("Payment data ",res.data)
+          console.log("Payment :",res)
+           this._service.markAsPaid(this.orderNo).subscribe((res)=>{
+             this._notify.success("Success",res.message)
+           })
+           this._service.contactMessageSend(this.orderNo,this.feedback.end_message).subscribe((res)=>{
+             if(res){
+              this._notify.success("success","End Message Success")
+             }
+           })
+
           this._notify.success('Success', res.message);
         } else {
           this._notify.error('Error', res.message);
@@ -239,5 +251,5 @@ export class BankInfoComponent implements OnInit, OnChanges {
       }
     });
   }
-  
+
 }

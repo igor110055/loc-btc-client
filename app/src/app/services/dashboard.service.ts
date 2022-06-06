@@ -8,6 +8,12 @@ export class DashboardService {
 
   constructor(private generalService : GeneralService) { }
 
+ // return this.generalService.putService(`/api/setting/updateMarginByCurrency/BTCINR` ,{"margin": data.margin},"btc")
+
+  markAsPaid(id:any){
+    return this.generalService.getService('/api/localbitcoin/getContactMessages/' + id, 'btc')
+  }
+
   getAdsData(){
     return this.generalService.getService("/api/localbitcoin/getAds",  "btc")
   }
@@ -104,11 +110,11 @@ export class DashboardService {
 
   getCompetitor() {
     return this.generalService.getService('/api/competitor/getCompetitor', 'btc')
-    
+
   }
 
   getCompDetails(id:any) {
     return this.generalService.getService('/api/localbitcoin/getAdsByNo/' + id, 'btc')
-    
+
   }
 }

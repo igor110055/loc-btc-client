@@ -42,7 +42,16 @@ export class ActiveTradeComponent implements OnInit, OnDestroy {
       selllerName: item.sellerNickname,
     });
     this.currentLi = i;
+ console.log("cuurent user :",this.currentChartUser,item.data.contact_id);
+   console.log("Msg",this.feedback)
+this._service.contactMessageSend(item.data.contact_id,this.feedback.start_message).subscribe((res)=>{
+   if(res)
+   {
+     this._notify.success("success","Message send successfully")
+   }
+})
   }
+
 
   send_feedback() {
     this._service.SaveStartFeed(this.feedback).subscribe(
@@ -72,7 +81,7 @@ export class ActiveTradeComponent implements OnInit, OnDestroy {
         this._notify.error('Error', error);
       }
     );
-    
+
   }
 
   openTradesMessages() {
@@ -82,7 +91,9 @@ export class ActiveTradeComponent implements OnInit, OnDestroy {
     this._socketService.setUserOrder();
     this.userOrderDetailsSub = this._socketService.getUserOrderDetails().subscribe(
       (res: any) => {
-        if (res) {
+        if (res)
+      {
+        res=res.data
           this.open_trades_messages = res.contact_list.sort((a:any, b: any) => b.data.created_at - a.data.created_at);
         }else {
           this._notify.error('Error', "Something went wrong active trade");
