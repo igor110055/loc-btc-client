@@ -7,6 +7,7 @@ export const environment = {
   socketURL:"http://localhost:4000",
   wazirx_URL:"https://api.wazirx.com",
   Binanace_URL:"http://localhost:4000",
+  username: "bhupsonline"
 };
 
 /*

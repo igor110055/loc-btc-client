@@ -26,7 +26,7 @@
         style="padding-top: 10px"
       /> -->
       <div (click)="openChart(item, i)" class="text-left pdglft-15 pointer">
-        <div (click)="openChart(item, i)" class="capital-text order-header">
+        <div class="capital-text order-header">
           <div>
             <span style="font-size: 15px"> {{ item.data.seller.username }}</span>
           </div>
@@ -50,11 +50,13 @@
         <textarea
           class="form-control z-depth-1"
           [(ngModel)]="feedback.start_message"
+          row="5"
         ></textarea>
         <label>Trade end message</label>
         <textarea
           class="form-control z-depth-1"
           [(ngModel)]="feedback.end_message"
+          row="5"
         ></textarea>
 
         <button

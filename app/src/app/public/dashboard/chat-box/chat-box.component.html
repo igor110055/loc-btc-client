@@ -12,7 +12,7 @@
   </header>
   <ul id="chat">
       <li *ngFor="let message of chatLists; let i = index;">
-        <div class="you"  *ngIf="i % 2 === 0">
+        <div class="you"  *ngIf="message.sender.username !== username">
           <div class="entete receiver">
             <span class="status green"></span>
             <h2 class="capital-text">{{message.sender.name}}</h2>
@@ -34,7 +34,7 @@
             <i class="fa fa-copy pointer" (click)="copyChat(message.acDetails)"></i>
           </div>
         </div>
-        <div class="me" *ngIf="i % 2 !== 0">
+        <div class="me" *ngIf="message.sender.username == username">
           <div class="entete sender">
             <h2>You</h2>
             <span class="status blue"></span>

@@ -16,4 +16,6 @@ aside li div{display:inline-block;vertical-align:top;margin-top:3px;}
 aside div div.order-header{display: flex; justify-content: space-between;}
 aside div{width: 100%;}
 .btn_pay {width: 100%;}
+textarea{min-height: 250px;}
+label{margin: 15px 0px;}
 

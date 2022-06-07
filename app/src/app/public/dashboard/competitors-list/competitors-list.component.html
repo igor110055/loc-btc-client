@@ -42,15 +42,15 @@
         </button>
       </li>
       <li
-        style="padding: 0px 10px"
-        *ngFor="let comp_id of comp_list"
+        style="padding: 10px 10px"
+        
         class="comp_ids"
       >
-        <span class="id_list">
+        <span class="id_list" *ngFor="let comp_id of comp_list">
           <!-- {{comp_id.id}} {{comp_id.adsprice}} -->
           <a href="https://localbitcoins.com/ad/{{comp_id}}" target="_blank">{{comp_id}}</a>
           <a
-            class="text-danger close_b btn"
+            class="text-danger close_b"
             (click)="onRemoveCompById(comp_id)"
             >X</a
           ></span

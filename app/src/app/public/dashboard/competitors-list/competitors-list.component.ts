@@ -87,7 +87,7 @@ export class CompetitorsListComponent implements OnInit {
           // }
         } else {
           console.log("in making null comp list");
-          this._notify.error('Error', res.message);
+          this._notify.error('Error', "No competitor");
           this.comp_list = [];
         }
       } else {

@@ -14,11 +14,11 @@
             <app-active-trade (postChatStatus)="handleDataChatStatus($event)" ></app-active-trade>
         </div>
         <div class="chat-box  col-xs-4 col-sm-4 col-md-4">
-            <app-chat-box (postBankDetails)="handleDataBankDetails($event)" [fetchPostStatus]="chatStatusData"></app-chat-box>
+            <app-chat-box (postBankDetails)="handleDataBankDetails($event)" [fetchPostStatus]="chatStatusData" [fetchRefreshChatMessage]="refreshChatMessage"></app-chat-box>
         </div>
         <div class="bank-competitors-section col-xs-4 col-sm-4 col-md-4">
             <app-competitors-list [fetchMarginData]="adsDetailsData" (postMarginBack)="handleDataCompListUpdatedMargin($event)"></app-competitors-list>
-            <app-bank-info [fetchBankData]="bankDetailsData" [fetchChatStatusData]="chatStatusData"></app-bank-info>
+            <app-bank-info [fetchBankData]="bankDetailsData" [fetchChatStatusData]="chatStatusData" (postRefreshChatMessage)="handlePostRefreshChatMessage($event)"></app-bank-info>
             <app-portals [fetchWZPrice]="postWZPrice"></app-portals>
         </div>
     </div>

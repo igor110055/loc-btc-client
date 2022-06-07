@@ -24,16 +24,30 @@ export class ChatBoxComponent implements OnInit {
   public welcomeMsg: any = "";
   public postedMessage: any = "";
   public orderNo: number = 0;
+  public username: string = "";
+  public paidAmt: string = "";
+  public btcqty: string = "";
   @ViewChild('scrollMe') private myScrollContainer: ElementRef<any> | any;
 
   @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef<any> | any;
   @Output() public postBankDetails = new EventEmitter<any>();
   @Input() set fetchPostStatus(data:any) {
     if(data) {
+      console.log(data)
       this.showChatBox = data.status;
       this.orderNo = data.orderNo;
+      this.username = data.userName;
+      this.paidAmt = data.amount;
+      this.btcqty = data.amount_btc;
       this.setChatMessages();
       
+    }
+  }
+
+  @Input() set fetchRefreshChatMessage(data: boolean) {
+    if(data) {
+      this.chatLists = [];
+      this.setChatMessages();
     }
   }
 
@@ -107,14 +121,13 @@ export class ChatBoxComponent implements OnInit {
           if(data.msg.includes("IFSC")) {
             var acDetails = data.msg.split("\n");
             console.log(acDetails);
-            if(acDetails[3]) {
-              data.acDetails.name = acDetails[1].split(":")[1]
-              data.acDetails.accNo = acDetails[2].split(":")[1]
-              data.acDetails.ifsc = acDetails[3].split(":")[1]
+            if(acDetails[2]) {
+              data.acDetails.name = acDetails[0].split(":")[1]
+              data.acDetails.accNo = acDetails[1].split(":")[1]
+              data.acDetails.ifsc = acDetails[2].split(":")[1]
             } 
           };
         })
-        this.setWelcomeMessage();
         this.postBankDetails.emit(false)
       }
     },(error) => this._notify.error("Error", "Something went wrong"))
@@ -122,7 +135,7 @@ export class ChatBoxComponent implements OnInit {
   
   copyChat(msg:any)
   {
-    this.postBankDetails.emit(msg);
+    this.postBankDetails.emit({"msg":msg, "amt": this.paidAmt, "btcqty": this.btcqty});
   
   }
 
@@ -165,22 +178,6 @@ export class ChatBoxComponent implements OnInit {
   {
   }
 
-  setWelcomeMessage() {
-    this._service.getStartEndMessages().subscribe(
-      (res: any) => {
-        if (res && res.data && res.message == 'Success') {
-          this.welcomeMsg = res.data.start_message;
-          this._notify.success('Success', "Welcome message sent");
-        } else {
-          this._notify.error('Error', res.message);
-          this._notify.error('Error', res.data);
-        }
-      },
-      (error: any) => {
-        this._notify.error('Error', error);
-      }
-    );
-  }
-
+  
 
 }

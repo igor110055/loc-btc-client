@@ -8,4 +8,5 @@ export const environment = {
   socketURL:"http://194.233.64.35:4000",
   wazirx_URL:"https://api.wazirx.com",
   Binanace_URL:"http://194.233.64.35:4000",
+  username: "bhupsonline"
 };

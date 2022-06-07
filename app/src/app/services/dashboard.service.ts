@@ -11,8 +11,15 @@ export class DashboardService {
  // return this.generalService.putService(`/api/setting/updateMarginByCurrency/BTCINR` ,{"margin": data.margin},"btc")
 
   markAsPaid(id:any){
-    return this.generalService.getService('/api/localbitcoin/getContactMessages/' + id, 'btc')
+    return this.generalService.getService('/api/localbitcoin/contactMarkAsPaid/' + id, 'btc')
   }
+
+  
+  postBtcqty(id:any){
+    return this.generalService.getService('/api/wazirx/sellPrice/' + id, 'btc')
+  }
+
+  
 
   getAdsData(){
     return this.generalService.getService("/api/localbitcoin/getAds",  "btc")

@@ -1,11 +1,26 @@
 import { KeyValue } from '@angular/common';
-import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { jsPDF } from 'jspdf';
 
 import * as htmlToImage from 'html-to-image';
 import * as moment from 'moment';
 import { ToastrsService } from 'src/app/services/toastrs.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import html2canvas from 'html2canvas';
 import { DashboardService } from 'src/app/services/dashboard.service';
 
@@ -15,41 +30,58 @@ import { DashboardService } from 'src/app/services/dashboard.service';
   styleUrls: ['./bank-info.component.css'],
 })
 export class BankInfoComponent implements OnInit, OnChanges {
-  public sellerName: string = "";
-  public orderNo: string = "";
+  public sellerName: string = '';
+  public orderNo: string = '';
   public accountNo: any = {};
   public ifsc: any = {};
   public name: any = {};
+  public amount: string = '';
+  public btcqty: string = '';
 
   @ViewChild('scrollMe') private myScrollContainer: ElementRef<any> | any;
 
   @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef<any> | any;
   @Input() public set fetchBankData(data: any) {
-    if(data) {
-      console.log(data)
-      this.accountNo = data.accNo;
-      this.ifsc =  data.ifsc;
-      this.name =  data.name;
+    if (data) {
+      console.log(data);
+      this.accountNo = data.msg.accNo;
+      this.ifsc = data.msg.ifsc;
+      this.name = data.msg.name;
+      this.amount = data.amt;
+      this.btcqty = data.btcqty;
+      if (parseInt(this.amount) > 200000) {
+        this.inputForm.controls['transaction_types_id'].setValue(3, {
+          onlySelf: true,
+        });
+      } else {
+        this.inputForm.controls['transaction_types_id'].setValue(4, {
+          onlySelf: true,
+        });
+      }
       this.inputForm.patchValue({
         bene_account_number: this.accountNo,
         ifsc_code: this.ifsc,
-        recepient_name: this.name
-      })
+        recepient_name: this.name,
+        amount: this.amount,
+      });
     } else {
       this.inputForm.patchValue({
-        bene_account_number: "",
-        ifsc_code: "",
-        recepient_name: ""
-      })
+        bene_account_number: '',
+        ifsc_code: '',
+        recepient_name: '',
+        amount: ''
+      });
     }
-  };
+  }
 
   @Input() public set fetchChatStatusData(data: any) {
-    if(data) {
+    if (data) {
       this.sellerName = data.selllerName;
       this.orderNo = data.orderNo;
     }
   }
+
+  @Output() public postRefreshChatMessage = new EventEmitter<any>();
 
   public res_data: any = '';
   public recent_messages: any = '';
@@ -97,57 +129,109 @@ export class BankInfoComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder
   ) {
     this.inputForm = this.formBuilder.group({
-      otp: ['',Validators.required],
+      otp: ['', Validators.required],
       transaction_types_id: ['', Validators.required],
       amount: ['', Validators.required],
       bene_account_number: ['', Validators.required],
       ifsc_code: ['', Validators.required],
-      recepient_name: ['', Validators.required]
+      recepient_name: ['', Validators.required],
     });
   }
 
-  ngOnInit(): void {
-
-
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-
-  }
-
-
-
+  ngOnInit(): void {}
+  ngOnChanges(changes: SimpleChanges): void {}
 
   getOTP() {
     this._service.sendOTP().subscribe((res) => {
-      console.log("order no from get otp",this.orderNo)
-      if (res.message == "Created" && res.statusCode == "201") {
-        this._notify.success('Success', "Please check your mobile for OTP");
-
-      } else
-        this._notify.error('Error', res.message);
-
-    })
+      console.log('order no from get otp', this.orderNo);
+      if (res.message == 'Created' && res.statusCode == '201') {
+        this._notify.success('Success', 'Please check your mobile for OTP');
+      } else this._notify.error('Error', res.message);
+    });
   }
 
   initiatePayouts() {
-    console.log(this.inputForm)
+    console.log(this.inputForm);
 
-      if (this.inputForm.valid) {
-        this._service.initiatePayouts(this.inputForm.value).subscribe((res) => {
-        if (!!res && res.statusCode) {
+    if (this.inputForm.valid) {
+      this._service.initiatePayouts(this.inputForm.value).subscribe((res) => {
+        if (!!res && res.statusCode == 200) {
           this.showInvoice = false;
           this.res_data = res.data;
           this.date = res.data.d;
-          console.log("Payment data ",res.data)
-          console.log("Payment :",res)
-           this._service.markAsPaid(this.orderNo).subscribe((res)=>{
-             this._notify.success("Success",res.message)
-           })
-           this._service.contactMessageSend(this.orderNo,this.feedback.end_message).subscribe((res)=>{
-             if(res){
-              this._notify.success("success","End Message Success")
-             }
-           })
+          console.log('Payment data ', res.data);
+          console.log('Payment :', res);
+          let paymentDetailsMsg =
+          "Thank You, \n " +
+          res.data.recepient_name +
+          "\n your payment has been send successfully credited from AlchemistPro to Your Account Number: "  +
+          res.data.debit_account_number +
+          "\n Amount : " +
+          res.data.amount +
+          "\n Transaction id"  +
+          res.data.merchant_ref_id 
+          this._service
+            .contactMessageSend(this.orderNo, paymentDetailsMsg)
+            .subscribe(
+              (res) => {
+                if (res) {
+                  this._notify.success(
+                    'success',
+                    'Payment details message posted'
+                  );
+                }
+              },
+              (error) => {
+                this._notify.error(
+                  'Error',
+                  "Couldn't post payment details message due to API error. Please try again"
+                );
+              }
+            );
+
+          this._service.markAsPaid(this.orderNo).subscribe(
+            (res) => {
+              this._notify.success('Success', res.message);
+
+              this._service
+                .contactMessageSend(this.orderNo, this.feedback.end_message)
+                .subscribe(
+                  (res) => {
+                    if (res && res.statusCode == 200) {
+                      this._notify.success(
+                        'success',
+                        'Trade End Message Posted Successfully'
+                      );
+                      // this._service.postBtcqty(this.btcqty).subscribe((res: any) => {
+                      //   this._notify.success("Success", "BTC amount posted successfully")
+                      // },(error: any) => {
+                      //   this._notify.error(
+                      //     'Error',
+                      //     "Couldn't post BTC amount due to API error. Please try again"
+                      //   );
+                      // })
+                    } else {
+                      this._notify.error(
+                        'Error',
+                        'There is some error in trade end message please try again'
+                      );
+                    }
+                  },
+                  (error) => {
+                    this._notify.error(
+                      'Error',
+                      "Couldn't post payment details message due to API error. Please try again"
+                    );
+                  }
+                );
+            },
+            (error) => {
+              this._notify.error(
+                'Error',
+                "Couldn't post payment details message due to API error. Please try again"
+              );
+            }
+          );
 
           this._notify.success('Success', res.message);
         } else {
@@ -156,8 +240,9 @@ export class BankInfoComponent implements OnInit, OnChanges {
         }
       });
     } else {
-      this._notify.error("Error", "Please enter all bank details")
+      this._notify.error('Error', 'Please enter all bank details');
     }
+    this.postRefreshChatMessage.emit(true);
   }
 
   convetToPDF() {
@@ -188,14 +273,12 @@ export class BankInfoComponent implements OnInit, OnChanges {
     // if (!!id && id.length == 7 && this.selectedAds.ad_id) {
     id = parseInt(id);
     if (typeof id === 'number') {
-      this._service
-        .addCompetitorByID(id)
-        .subscribe((res) => {
-          if (!!res && res.status) {
-            this._notify.success('Success', res.message);
-            if (res.comp_ids.length > 0) this.comp_list = res.comp_ids;
-          } else this._notify.error('Error', res.message);
-        });
+      this._service.addCompetitorByID(id).subscribe((res) => {
+        if (!!res && res.status) {
+          this._notify.success('Success', res.message);
+          if (res.comp_ids.length > 0) this.comp_list = res.comp_ids;
+        } else this._notify.error('Error', res.message);
+      });
     }
     // }
   }
@@ -213,7 +296,7 @@ export class BankInfoComponent implements OnInit, OnChanges {
     this._service.getLimitValue().subscribe((res: any) => {
       if (!!res) {
         this.val = res.data;
-      }  else {
+      } else {
         this._notify.error('Error', res.message);
         this._notify.error('Error', res.data);
       }
@@ -223,7 +306,7 @@ export class BankInfoComponent implements OnInit, OnChanges {
         // this.feedback=res.data.feedback;
         this.feedback.firstmsg = res.data.firstmsg;
         this.feedback.lastmsg = res.data.lastmsg;
-      }  else {
+      } else {
         this._notify.error('Error', res.message);
         this._notify.error('Error', res.data);
       }
@@ -251,5 +334,4 @@ export class BankInfoComponent implements OnInit, OnChanges {
       }
     });
   }
-
 }

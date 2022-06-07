@@ -13,8 +13,7 @@ export class PortalsComponent implements OnInit {
   setwon: boolean = true
   setwoff: boolean = false
   @Input("fetchWZPrice") set function(data: any) {
-    //this.wzPrice = data;
-    this.wzPrice=data.wzSellPrice
+    this.wzPrice = data;
   }
   constructor() { }
 

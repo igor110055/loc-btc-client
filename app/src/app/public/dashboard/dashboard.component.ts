@@ -11,6 +11,7 @@ export class DashboardComponent implements OnInit {
   adsDetailsData: any;
   updatedMarginData: any;
   postWZPrice: any;
+  refreshChatMessage: boolean = false;
 
 
   constructor() { }
@@ -31,5 +32,8 @@ export class DashboardComponent implements OnInit {
   }
   handleDataWZPrice(data: any) {
     this.postWZPrice= data;
+  }
+  handlePostRefreshChatMessage(data: boolean) {
+    this.refreshChatMessage = data;
   }
 }
