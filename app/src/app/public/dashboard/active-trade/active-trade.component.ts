@@ -18,6 +18,7 @@ export class ActiveTradeComponent implements OnInit, OnDestroy {
   currentChartUser: any;
   currentChartRoom: any = [];
   currentLi: number = 0;
+  private tradeSub: Subscription = new Subscription();
   private userOrderDetailsSub: Subscription = new Subscription();
   @Output() public postChatStatus = new EventEmitter<any>();
   constructor(
@@ -85,24 +86,33 @@ this._service.contactMessageSend(item.data.contact_id,this.feedback.start_messag
   }
 
   openTradesMessages() {
-    interval(5000).pipe(
-      map(() => this._socketService.setUserOrder())
-    ).subscribe();
-    this._socketService.setUserOrder();
-    this.userOrderDetailsSub = this._socketService.getUserOrderDetails().subscribe(
-      (res: any) => {
-        if (res)
-      {
-        res=res.data
-          this.open_trades_messages = res.contact_list.sort((a:any, b: any) => b.data.created_at - a.data.created_at);
-        }else {
-          this._notify.error('Error', "Something went wrong active trade");
-        }
-      },
-      (error: any) => {
-        this._notify.error('Error', error);
-      }
-    );
+
+    this.tradeSub = this._socketService.getTrade().subscribe((data: any) => {
+      console.log("Trade Data",data.res.contact_list)
+      this.open_trades_messages = data.res.contact_list.sort((a:any, b: any) => b.data.created_at - a.data.created_at);
+    },(error) => {
+      this._notify.error("Error", error);
+    })
+
+    // interval(5000).pipe(
+    //   map(() => this._socketService.setUserOrder())
+    // ).subscribe();
+    // this._socketService.setUserOrder();
+    // this.userOrderDetailsSub = this._socketService.getUserOrderDetails().subscribe(
+    //   (res: any) => {
+    //     if (res)
+    //   {
+    //     res=res.data
+    //     console.log(res)
+    //       this.open_trades_messages = res.contact_list.sort((a:any, b: any) => b.data.created_at - a.data.created_at);
+    //     }else {
+    //       this._notify.error('Error', "Something went wrong active trade");
+    //     }
+    //   },
+    //   (error: any) => {
+    //     this._notify.error('Error', error);
+    //   }
+    // );
   }
   getStartEndMessages() {
     this._service.getStartEndMessages().subscribe(
@@ -124,5 +134,6 @@ this._service.contactMessageSend(item.data.contact_id,this.feedback.start_messag
 
   ngOnDestroy(): void {
     this.userOrderDetailsSub.unsubscribe();
+    this.tradeSub.unsubscribe();
   }
 }

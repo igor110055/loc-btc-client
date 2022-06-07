@@ -9,16 +9,20 @@ const SERVER_URL = 'wss://streamer.cryptocompare.com';
 })
 export class SocketService {
   baseSocketUrl: string = "";
-  constructor(private socket: Socket) { 
+  constructor(private socket: Socket) {
     this.baseSocketUrl =  environment.socketURL;
   }
-  
+
   setAdsDetails(advNo: string) {
     this.socket.emit("adsDetails", advNo)
   }
 
   getWazirxDetails() {
     return this.socket.fromEvent("WazirxPricesArray").pipe(map((data) => data));
+  }
+  getTrade() {
+    console.log("********************In Trade")
+    return this.socket.fromEvent("Trade_Data").pipe(map((data) => data));
   }
 
   getPriceUpdate() {
@@ -28,16 +32,16 @@ export class SocketService {
   setUserOrder() {
     return this.socket.emit("getTrades")
   }
-  
+
   getUserOrderDetails() {
     return this.socket.fromEvent("getTradeDetails").pipe(map((data) => data));
   }
   setMerchantAd() {
     return this.socket.emit("getMerchantAd",  {merchantNo: "s1b112d51539a3712bc212bce8089512c" })
   }
-  
+
   getMerchantAdDetails() {
     return this.socket.fromEvent("getMerchantAdDetails").pipe(map((data) =>  data));
   }
 
-} 
+}
