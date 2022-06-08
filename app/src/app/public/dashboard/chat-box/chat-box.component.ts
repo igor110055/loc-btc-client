@@ -33,14 +33,14 @@ export class ChatBoxComponent implements OnInit {
   @Output() public postBankDetails = new EventEmitter<any>();
   @Input() set fetchPostStatus(data:any) {
     if(data) {
-      console.log(data)
+      console.log("chat",data)
       this.showChatBox = data.status;
       this.orderNo = data.orderNo;
       this.username = data.userName;
       this.paidAmt = data.amount;
       this.btcqty = data.amount_btc;
       this.setChatMessages();
-      
+
     }
   }
 
@@ -125,21 +125,21 @@ export class ChatBoxComponent implements OnInit {
               data.acDetails.name = acDetails[0].split(":")[1]
               data.acDetails.accNo = acDetails[1].split(":")[1]
               data.acDetails.ifsc = acDetails[2].split(":")[1]
-            } 
+            }
           };
         })
         this.postBankDetails.emit(false)
       }
     },(error) => this._notify.error("Error", "Something went wrong"))
-  } 
-  
-  copyChat(msg:any)
-  {
-    this.postBankDetails.emit({"msg":msg, "amt": this.paidAmt, "btcqty": this.btcqty});
-  
   }
 
-  
+  copyChat(msg:any)
+  {
+    this.postBankDetails.emit({"msg":msg, "amt": this.paidAmt});
+
+  }
+
+
 
   convetToPDF()
    {
@@ -178,6 +178,6 @@ export class ChatBoxComponent implements OnInit {
   {
   }
 
-  
+
 
 }

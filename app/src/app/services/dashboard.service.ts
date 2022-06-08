@@ -14,12 +14,12 @@ export class DashboardService {
     return this.generalService.getService('/api/localbitcoin/contactMarkAsPaid/' + id, 'btc')
   }
 
-  
-  postBtcqty(id:any){
-    return this.generalService.getService('/api/wazirx/sellPrice/' + id, 'btc')
+
+  postBtcqty(qnty:any,price:any){
+    return this.generalService.getService('/api/wazirx/sellPrice/'+ qnty+'/'+price, 'btc')
   }
 
-  
+
 
   getAdsData(){
     return this.generalService.getService("/api/localbitcoin/getAds",  "btc")

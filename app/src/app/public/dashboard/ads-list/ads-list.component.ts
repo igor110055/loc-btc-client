@@ -83,7 +83,10 @@ export class AdsListComponent implements OnInit, OnDestroy {
       this.val = this.wzsData && this.wzsData.uplimit ? parseFloat(this.wzsData.uplimit) * 100 : this.val;
       this.wazirxSellPrice = parseFloat(this.wzsData.wsellprice)
       this.zebSellPrice = parseFloat(this.wzsData.zebsell)
-      this.postWZPriceDetails.emit({"price": this.wazirxBidPrice, "wzSellPrice": this.wazirxSellPrice, "zebSellPrice": this.zebSellPrice});
+      this.postWZPriceDetails.emit(
+        {"price": this.wazirxBidPrice,
+         "wzSellPrice": this.wazirxSellPrice,
+         "zebSellPrice": this.zebSellPrice});
     },(error) => {
       this._notify.error("Error", error);
     })
