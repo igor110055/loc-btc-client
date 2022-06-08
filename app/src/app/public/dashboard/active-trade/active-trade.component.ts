@@ -49,6 +49,7 @@ export class ActiveTradeComponent implements OnInit, OnDestroy {
     this.currentChartRoom = [];
     this.currentChartUser = item;
     this.currentLi = i;
+    console.log("current item :",item.data)
     this._service.getOrderDetails(item.data.contact_id.toString()).subscribe(
       (res: any) => {
         if (
@@ -85,7 +86,8 @@ export class ActiveTradeComponent implements OnInit, OnDestroy {
           status: true,
           selllerName: item.sellerNickname,
           userName: environment.username,
-          amount: item.data.amount
+          amount: item.data.amount,
+          btc:item.data.amount_btc
         });
       },
       (error) => {
@@ -97,7 +99,7 @@ export class ActiveTradeComponent implements OnInit, OnDestroy {
     );
   }
 
-  
+
   send_feedback() {
     this._service.SaveStartFeed(this.feedback).subscribe(
       (res: any) => {
@@ -137,7 +139,7 @@ export class ActiveTradeComponent implements OnInit, OnDestroy {
         );
       },
       (error) => {
-        this._notify.error('Error', error); 
+        this._notify.error('Error', error);
       }
     );
 

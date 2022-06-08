@@ -9,7 +9,7 @@
             <app-ads-list (postAdsDetails)="handleDataAdsListDetails($event)" [fetchUpdatedMarginData]="updatedMarginData" (postWZPriceDetails)="handleDataWZPrice($event)"></app-ads-list>
         </div>
     </div>
-    <div class="sub-section row">  
+    <div class="sub-section row">
         <div class="active-trades col-xs-4 col-sm-4 col-md-4 text-center">
             <app-active-trade (postChatStatus)="handleDataChatStatus($event)" ></app-active-trade>
         </div>
@@ -18,7 +18,7 @@
         </div>
         <div class="bank-competitors-section col-xs-4 col-sm-4 col-md-4">
             <app-competitors-list [fetchMarginData]="adsDetailsData" (postMarginBack)="handleDataCompListUpdatedMargin($event)"></app-competitors-list>
-            <app-bank-info [fetchBankData]="bankDetailsData" [fetchChatStatusData]="chatStatusData" (postRefreshChatMessage)="handlePostRefreshChatMessage($event)"></app-bank-info>
+            <app-bank-info [fetchBankData]="bankDetailsData" [fetchChatStatusData]="chatStatusData" [fetchWZPrice]="postWZPrice" (postRefreshChatMessage)="handlePostRefreshChatMessage($event)"></app-bank-info>
             <app-portals [fetchWZPrice]="postWZPrice"></app-portals>
         </div>
     </div>

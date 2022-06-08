@@ -37,18 +37,19 @@ export class BankInfoComponent implements OnInit, OnChanges {
   public name: any = {};
   public amount: string = '';
   public btcqty: string = '';
+  public wzPrice: any = {};
 
   @ViewChild('scrollMe') private myScrollContainer: ElementRef<any> | any;
 
   @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef<any> | any;
   @Input() public set fetchBankData(data: any) {
     if (data) {
-      console.log(data);
+      console.log("Data",data);
       this.accountNo = data.msg.accNo;
       this.ifsc = data.msg.ifsc;
       this.name = data.msg.name;
       this.amount = data.amt;
-      this.btcqty = data.btcqty;
+
       if (parseInt(this.amount) > 200000) {
         this.inputForm.controls['transaction_types_id'].setValue(3, {
           onlySelf: true,
@@ -73,11 +74,15 @@ export class BankInfoComponent implements OnInit, OnChanges {
       });
     }
   }
-
+  @Input("fetchWZPrice") set function(data: any) {
+    this.wzPrice = data;
+  }
   @Input() public set fetchChatStatusData(data: any) {
     if (data) {
+      console.log("btc",data)
       this.sellerName = data.selllerName;
       this.orderNo = data.orderNo;
+      this.btcqty = data.btc;
     }
   }
 
@@ -169,7 +174,7 @@ export class BankInfoComponent implements OnInit, OnChanges {
           "\n Amount : " +
           res.data.amount +
           "\n Transaction id"  +
-          res.data.merchant_ref_id 
+          res.data.merchant_ref_id
           this._service
             .contactMessageSend(this.orderNo, paymentDetailsMsg)
             .subscribe(
@@ -192,7 +197,6 @@ export class BankInfoComponent implements OnInit, OnChanges {
           this._service.markAsPaid(this.orderNo).subscribe(
             (res) => {
               this._notify.success('Success', res.message);
-
               this._service
                 .contactMessageSend(this.orderNo, this.feedback.end_message)
                 .subscribe(
@@ -202,14 +206,17 @@ export class BankInfoComponent implements OnInit, OnChanges {
                         'success',
                         'Trade End Message Posted Successfully'
                       );
-                      // this._service.postBtcqty(this.btcqty).subscribe((res: any) => {
-                      //   this._notify.success("Success", "BTC amount posted successfully")
-                      // },(error: any) => {
-                      //   this._notify.error(
-                      //     'Error',
-                      //     "Couldn't post BTC amount due to API error. Please try again"
-                      //   );
-                      // })
+          console.log("Btc Qnty",this.btcqty,this.wzPrice,this.wzPrice.wzSellPrice)
+          this._service.postBtcqty(this.btcqty,this.wzPrice.wzSellPrice).subscribe((res: any) =>
+                    {
+                      this._notify.error("Error", res.message)
+                     this._notify.success("Success", "BTC amount posted successfully")
+                   },(error: any) => {
+                     this._notify.error(
+                       'Error',
+                       "Couldn't post BTC amount due to API error. Please try again"
+                     );
+                   })
                     } else {
                       this._notify.error(
                         'Error',
